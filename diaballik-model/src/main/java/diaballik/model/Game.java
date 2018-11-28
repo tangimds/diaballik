@@ -5,43 +5,50 @@ import java.util.Collection;
 public class Game {
 
 	private int nbTurn;
-
 	private Scenario scenario;
-
 	private int id;
-
 	private Collection<Action> actions;
+	private Board board;
+	private Level level;
+	private Player p1;
+	private Player p2;
 
-	public Game(Player p1, Player p2, Scenario mode) {
 
+	public Game(final Player p1, final Player p2, final Scenario mode) {
+		this.p1 = p1;
+		this.p2 = p2;
+		this.scenario = mode;
 	}
 
-	public Game(Player p1, Level lvl, Scenario mode) {
-
+	public Game(final Player p1, final Level lvl, final Scenario mode) {
+		this.p1 = p1;
+		this.p2 = null;
+		this.level = lvl;
+		this.scenario = mode;
 	}
 
 	public Player getPlayer1() {
-		return null;
+		return p1;
 	}
 
 	public Player getPlayer2() {
-		return null;
+		return p2;
 	}
 
 	public Scenario getScenario() {
-		return null;
+		return scenario;
 	}
 
 	public int getTurn() {
-		return 0;
+		return nbTurn;
 	}
 
 	public int getNbActions() {
-		return 0;
+		return actions.size();
 	}
 
-	public void setTurn() {
-
+	public void setTurn(final int t) {
+		nbTurn = t;
 	}
 
 	public void playHuman() {
@@ -52,11 +59,11 @@ public class Game {
 
 	}
 
-	public Board nextAction(int numAction) {
+	public Board nextAction(final int numAction) {
 		return null;
 	}
 
-	public Board previousAction(int numAction) {
+	public Board previousAction(final int numAction) {
 		return null;
 	}
 

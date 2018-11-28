@@ -2,7 +2,8 @@ package diaballik.model;
 
 public class ProgressiveLevel implements Level {
 
-	public Action chooseAction(Board board) {
+	@Override
+	public Action chooseAction(final Board board) {
 		return null;
 	}
 

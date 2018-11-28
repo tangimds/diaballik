@@ -3,29 +3,29 @@ package diaballik.model;
 public class Piece {
 
 	private Color color;
-
 	private int x;
-
 	private int y;
 
-	public Piece(Color color) {
+	public Piece(final Color color, final int x, final int y) {
+		this.color = color;
+		this.x = x;
+		this.y = y;
+	}
 
+
+	public void setPosition(final int x, final int y) {
+		this.x = x;
+		this.y = y;
 	}
 
 	public Color getColor() {
-		return null;
+	    return color;
 	}
-
-	public void setPosition(int x, int y) {
-
-	}
-
 	public int getX() {
-		return 0;
+		return x;
 	}
-
 	public int getY() {
-		return 0;
+	    return y;
 	}
 
 }

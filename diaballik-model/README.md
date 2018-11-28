@@ -3,10 +3,10 @@ The back-end of the app.
 
 DO NOT MODIFY THE CONFIGURATION FILES (eg, pom.xml, checkstyle.xml).
 
-Build it using maven:
-`mvn clean package`
-`mvn clean compile`
-`mvn clean test`
+Build it using maven:  
+`mvn clean package`  
+`mvn clean compile`  
+`mvn clean test`  
 etc.
 
 The output war file of the app is built in the `target` folder.
