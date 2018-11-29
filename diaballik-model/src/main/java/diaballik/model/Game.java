@@ -20,13 +20,6 @@ public class Game {
 		this.scenario = mode;
 	}
 
-	public Game(final Player p1, final Level lvl, final Scenario mode) {
-		this.p1 = p1;
-		this.p2 = null;
-		this.level = lvl;
-		this.scenario = mode;
-	}
-
 	// getters et setters
 	public Player getPlayer1() {
 		return p1;
