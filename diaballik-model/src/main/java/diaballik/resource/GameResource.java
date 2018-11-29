@@ -28,6 +28,7 @@ public class GameResource {
 						   @PathParam("name2") final String name2,
 						   @PathParam("scenario") final String scenario) {
 
+		return null;
 	}
 
 	@PUT
@@ -36,28 +37,28 @@ public class GameResource {
 	public Game newGamePVC(@PathParam("name") final String name,
 						   @PathParam("scenario") final String scenario,
 						   @PathParam("level") final String level) {
-
+		return null;
 	}
 
 	@PUT
 	@Path("loadGame/{idGame}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game loadGame(@PathParam("idGame") final String idGame) {
-
+		return null;
 	}
 
 	@PUT
 	@Path("replay/{idGame}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game replay(@PathParam("idGame") final String idGame) {
-
+		return null;
 	}
 
 	@GET
 	@Path("/savedGames/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game savedGames(){
-
+		return null;
 	}
 
 	//Requêtes pour sauvegarder et quitter une partie
@@ -66,14 +67,14 @@ public class GameResource {
 	@Path("/save/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game save(){
-
+		return null;
 	}
 
 	@GET
 	@Path("/quit/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game quit(){
-
+		return null;
 	}
 
 	//Requêtes de replay
@@ -81,14 +82,14 @@ public class GameResource {
 	@Path("/replay/redo/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game redo(){
-
+		return null;
 	}
 
 	@GET
 	@Path("/replay/undo")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game undo(){
-
+		return null;
 	}
 
 	//Requêtes de déplacement
@@ -100,7 +101,7 @@ public class GameResource {
 						   @PathParam("y1") final String y1,
 						   @PathParam("x2") final String x2,
 						   @PathParam("y2") final String y2) {
-
+		return null;
 	}
 
 	@PUT
@@ -111,6 +112,6 @@ public class GameResource {
 						   @PathParam("y1") final String y1,
 						   @PathParam("x2") final String x2,
 						   @PathParam("y2") final String y2) {
-
+		return null;
 	}
 }
