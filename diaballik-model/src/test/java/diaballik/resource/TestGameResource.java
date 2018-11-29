@@ -21,7 +21,8 @@ public class TestGameResource {
     JerseyExtension jerseyExtension = new JerseyExtension(this::configureJersey);
 
     private Application configureJersey() {
-        return new ResourceConfig(). // GameResource.class). TODO add your resource(s) here
+        return new ResourceConfig(). //
+                register(GameResource.class).
                 register(MyExceptionMapper.class).
                 register(JacksonFeature.class).
                 register(DiabalikJacksonProvider.class).

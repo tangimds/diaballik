@@ -1,7 +1,6 @@
 package diaballik;
 
-//import diaballik.resource.GameResource;
-
+import diaballik.resource.GameResource;
 import diaballik.resource.MyExceptionMapper;
 import diaballik.serialization.DiabalikJacksonProvider;
 
@@ -27,7 +26,8 @@ public final class Main {
      * @return Grizzly HTTP server.
      */
     public static HttpServer startServer() {
-        final ResourceConfig rc = new ResourceConfig().//GameResource.class).
+        final ResourceConfig rc = new ResourceConfig().
+				register(GameResource.class).
                 register(MyExceptionMapper.class).
                 register(JacksonFeature.class).
                 register(DiabalikJacksonProvider.class).

@@ -6,10 +6,10 @@
         <property name="fileExtensions" value="java, xml"/>
     </module>
 
-    <module name="RegexpMultiline">
+    <!--<module name="RegexpMultiline">
         <property name="format" value="\r\n"/>
         <property name="message" value="Do not use Windows line endings"/>
-    </module>
+    </module>-->
 
     <module name="TreeWalker">
         <module name="EqualsAvoidNull"/>
