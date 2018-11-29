@@ -27,6 +27,7 @@ public class Game {
 		this.scenario = mode;
 	}
 
+	// getters et setters
 	public Player getPlayer1() {
 		return p1;
 	}
@@ -51,12 +52,12 @@ public class Game {
 		nbTurn = t;
 	}
 
-	public void playHuman() {
-
+	public void playHuman(Board b) {
+		p1.play(b);
 	}
 
-	public void playAI() {
-
+	public void playAI(Board b) {
+		p2.play(b);
 	}
 
 	public Board nextAction(final int numAction) {

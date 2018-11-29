@@ -15,7 +15,7 @@ public class MoveBall implements Action {
 	}
 
 	@Override
-	public boolean verifyAction() {
+	public boolean verifyAction(Board b) {
 		return false;
 	}
 
@@ -29,10 +29,6 @@ public class MoveBall implements Action {
 
 	}
 
-
-	/**
-	 * @see Action#execute(Board)
-	 */
 	@Override
 	public void execute(final Board board) {
 
