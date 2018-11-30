@@ -1,13 +1,15 @@
 package diaballik.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Game {
 
 	private int nbTurn;
 	private Scenario scenario;
 	private int id;
-	private Collection<Action> actions;
+	private ArrayList<Action> actions;
 	private Board board;
 	private Level level;
 	private Player p1;
@@ -15,12 +17,34 @@ public class Game {
 
 
 	public Game(final Player p1, final Player p2, final Scenario mode) {
+
+		//initialization of the arguments
 		this.p1 = p1;
 		this.p2 = p2;
 		this.scenario = mode;
+		this.nbTurn = 0;
+		this.actions = new ArrayList<>();
+
+		switch (Scenario.values()[mode.ordinal()]) {
+			case STANDARD:
+				final StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
+				this.board = standardBoardBuilder.buildBoard();
+				break;
+			case RANDOM:
+				final RandomBoardBuilder randomBoardBuilder = new RandomBoardBuilder();
+				this.board = randomBoardBuilder.buildBoard();
+				break;
+			case EAU:
+				final EAUBoardBuilder eauBoardBuilder = new EAUBoardBuilder();
+				this.board = eauBoardBuilder.buildBoard();
+				break;
+			default:
+				this.board = null;
+				break;
+		}
 	}
 
-	// getters et setters
+	// getters and setters
 	public Player getPlayer1() {
 		return p1;
 	}
@@ -43,6 +67,10 @@ public class Game {
 
 	public void setTurn(final int t) {
 		nbTurn = t;
+	}
+
+	public void setLevel(Level lvl) {
+		this.level = lvl;
 	}
 
 	public void playHuman(Board b) {
