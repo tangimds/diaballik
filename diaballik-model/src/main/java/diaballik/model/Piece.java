@@ -28,4 +28,8 @@ public class Piece {
 	    return y;
 	}
 
+	public void setColor(final Color c){
+		color = c;
+	}
+
 }
