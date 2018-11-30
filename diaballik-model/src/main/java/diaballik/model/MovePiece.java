@@ -62,11 +62,11 @@ public class MovePiece implements Action {
 	}
 
 	public static void main(final String[] args) {
-		Piece p = new Piece(WHITE,2,2);
-		MovePiece mp = new MovePiece(p,3,3);
-		System.out.println("dx : "+mp.dx);
-		System.out.println("dy : "+mp.dy);
-		System.out.println("autorise : "+mp.verifyAction(new Board()));
+		Piece p = new Piece(WHITE, 2, 2);
+		MovePiece mp = new MovePiece(p, 3, 3);
+		System.out.println("dx : " + mp.dx);
+		System.out.println("dy : " + mp.dy);
+		System.out.println("autorise : " + mp.verifyAction(new Board()));
 	}
 }
 

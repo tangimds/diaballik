@@ -6,8 +6,8 @@ public abstract class Player {
 	protected Color color;
 
 	public Player(final String name, final Color color) {
-	    this.name = name;
-	    this.color = color;
+		this.name = name;
+		this.color = color;
 	}
 
 	public abstract Action play(Board board);
@@ -15,6 +15,7 @@ public abstract class Player {
 	public Color getColor() {
 		return color;
 	}
+
 	public String getName() {
 		return name;
 	}

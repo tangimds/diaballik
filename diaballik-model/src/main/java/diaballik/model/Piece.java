@@ -19,16 +19,18 @@ public class Piece {
 	}
 
 	public Color getColor() {
-	    return color;
+		return color;
 	}
+
 	public int getX() {
 		return x;
 	}
+
 	public int getY() {
-	    return y;
+		return y;
 	}
 
-	public void setColor(final Color c){
+	public void setColor(final Color c) {
 		color = c;
 	}
 
