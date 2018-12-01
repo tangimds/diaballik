@@ -43,12 +43,16 @@ public class Piece {
 		final int x1 = this.x - p1.x;
 		final int y1 = this.y - p1.y;
 		final int x2 = p2.x - p1.x;
-		final int y2 = p2.x - p1.y;
+		final int y2 = p2.y - p1.y;
 
-		final boolean colinear = x1*y2-x2*y1 == 0;
+		final boolean colinear = x1 * y2 - x2 * y1 == 0;
+		//System.out.println("colinear : "+colinear);
 
-		final double cosinus = (x1*x2+y1*y2) / (Math.sqrt((x1*x1)+(y1*y1))*Math.sqrt((x2*x2)+(y2*y2)));
-		final boolean sameDirection = cosinus>0;
-		return colinear&&sameDirection;
+		final double cosinus = (x1 * x2 + y1 * y2) / (Math.sqrt((x1 * x1) + (y1 * y1)) * Math.sqrt((x2 * x2) + (y2 * y2)));
+		final boolean sameDirection = cosinus > 0;
+		final boolean shorter = (Math.sqrt((x1 * x1) + (y1 * y1)) < Math.sqrt((x2 * x2) + (y2 * y2)));
+		//System.out.println("same direction : "+sameDirection);
+
+		return colinear && sameDirection && shorter;
 	}
 }
