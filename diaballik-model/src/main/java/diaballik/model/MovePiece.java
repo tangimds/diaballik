@@ -1,6 +1,7 @@
 package diaballik.model;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static diaballik.model.Color.WHITE;
 
@@ -30,7 +31,11 @@ public class MovePiece implements Action {
 
 	@Override
 	public void execute(final Board board) {
-
+		Optional<Piece> optPiece = board.getPieces().stream().filter(p -> p == piece).findFirst();
+		if (optPiece.isPresent()) {
+			Piece p = optPiece.get();
+			p.setPosition(p.getX() + dx, p.getY() + dy);
+		}
 	}
 
 	@Override
@@ -66,7 +71,7 @@ public class MovePiece implements Action {
 		Board board = standardBoardBuilder.buildBoard();
 
 		//move la piece (3,1) en (3,2)
-		MovePiece mp = new MovePiece(board.getPiece(3,1),3,2);
+		MovePiece mp = new MovePiece(board.getPiece(3, 1), 3, 2);
 		System.out.println("dx : " + mp.dx);
 		System.out.println("dy : " + mp.dy);
 		System.out.println("autorise : " + mp.verifyAction(board));

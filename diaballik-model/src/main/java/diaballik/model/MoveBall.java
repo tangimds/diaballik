@@ -1,5 +1,6 @@
 package diaballik.model;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class MoveBall implements Action {
@@ -12,8 +13,13 @@ public class MoveBall implements Action {
 		this.endingPiece = endingPiece;
 	}
 
-	public void execute(final int boardBoard) {
-
+	@Override
+	public void execute(final Board board) {
+		if (startingPiece.getColor() == Color.WHITE) {
+			board.setCurrentWhiteHolder(endingPiece);
+		} else {
+			board.setCurrentBlackHolder(endingPiece);
+		}
 	}
 
 	@Override
@@ -65,10 +71,6 @@ public class MoveBall implements Action {
 
 	}
 
-	@Override
-	public void execute(final Board board) {
-
-	}
 
 	public static void main(final String[] args) {
 		final Piece p1 = new Piece(Color.WHITE, 5, 4);
