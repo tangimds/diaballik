@@ -1,7 +1,9 @@
 package diaballik.model;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Random;
 
 public class NoobLevel implements Level {
@@ -11,28 +13,33 @@ public class NoobLevel implements Level {
 		return pickAction(board);
 	}
 
-	public Action pickAction(final Board board){
+	private Action pickAction(final Board board) {
 		final ArrayList<Piece> blackPieces = new ArrayList<>();
 		board.getPieces().stream().filter(p -> p.getColor() == Color.BLACK).forEach(blackPieces::add);
-		Action a = null;
+		Collections.shuffle(blackPieces);
+		Optional<Action> a = Optional.empty();
 		final Random r = new Random();
-		if(r.nextBoolean()){//Move a piece
-			Collections.shuffle(blackPieces);
+		if (r.nextBoolean()) {//Move a piece
 			final Piece p = blackPieces.get(0);
-			int dl = -1 + 2*r.nextInt(1);
-			if(r.nextBoolean()){
-				a = new MovePiece(p, p.getX()+dl,p.getY());
+			int dl = -1 + 2 * r.nextInt(1);
+			if (r.nextBoolean()) {
+				a = Optional.of(new MovePiece(p, p.getX() + dl, p.getY()));
+			} else {
+				a = Optional.of(new MovePiece(p, p.getX(), p.getY() + dl));
 			}
-			else{
-				a = new MovePiece(p, p.getX(),p.getY()+dl);
-			}
-		}
-		else{//Move a ball
+		} else {//Move a ball
+			final Piece startingPiece = blackPieces.get(0);
 
+			Optional<Piece> optEndingPiece = blackPieces.stream().filter(p -> (p!=startingPiece) && (startingPiece.getX() == (p.getX()) ||
+						(startingPiece.getY() == p.getY()) ||
+						(Math.abs(startingPiece.getX() - p.getX()) == Math.abs(startingPiece.getY() - p.getY())))).findFirst();
+			if(optEndingPiece.isPresent()) a = Optional.of(new MoveBall(startingPiece, optEndingPiece.get()));
 		}
 
-		if(!a.verifyAction(board)) a = pickAction(board);
-		return a;
+		if (!a.isPresent() || !a.get().verifyAction(board)) {
+			a = Optional.of(pickAction(board));
+		}
+		return a.get();
 	}
 
 }

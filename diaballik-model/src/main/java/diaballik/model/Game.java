@@ -65,6 +65,10 @@ public class Game {
 		return actions.size();
 	}
 
+	public Board getBoard() {
+		return board;
+	}
+
 	public void setTurn(final int t) {
 		nbTurn = t;
 	}
@@ -78,7 +82,7 @@ public class Game {
 	}
 
 	public void playAI(Board b) {
-		p2.play(b);
+		p2.play(b).execute(b);
 	}
 
 	public Board nextAction(final int numAction) {
