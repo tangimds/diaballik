@@ -6,22 +6,8 @@ public class PvCGameBuilder extends GameBuilder {
 		final Player hPlayer = new HumanPlayer(name1, Color.WHITE);
 		final Scenario scnr = Scenario.values()[scenario];
 		final Level lvl;
-		switch (Difficulty.values()[difficulty]) {
-			case NOOB:
-				lvl = new NoobLevel();
-				break;
-			case STARTING:
-				lvl = new StartingLevel();
-				break;
-			case PROGRESSIVE:
-				lvl = new ProgressiveLevel();
-				break;
-			default:
-				lvl = null;
-				break;
-		}
 
-		final Player aiPlayer = new AIPlayer(name2, Color.BLACK, lvl);
+		final Player aiPlayer = new AIPlayer(name2, Color.BLACK, Difficulty.values()[difficulty]);
 
 		return new Game(hPlayer, aiPlayer, scnr);
 	}

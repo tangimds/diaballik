@@ -4,13 +4,26 @@ public class AIPlayer extends Player {
 
 	private Level level;
 
-	public AIPlayer(final String n, final Color c, final Level lvl) {
+	public AIPlayer(final String n, final Color c, final Difficulty difficulty) {
 		super(n, c);
-		this.level = lvl;
+		switch (difficulty) {
+			case NOOB:
+				level = new NoobLevel();
+				break;
+			case STARTING:
+				level = new StartingLevel();
+				break;
+			case PROGRESSIVE:
+				level = new ProgressiveLevel();
+				break;
+			default:
+				level = null;
+				break;
+		}
 	}
 
-	public AIPlayer setLevel(final Level lvl) {
-		return null;
+	public void setLevel(final Level lvl) {
+		level = lvl;
 	}
 
 	public Level getLevel() {
@@ -19,7 +32,8 @@ public class AIPlayer extends Player {
 
 	@Override
 	public Action play(final Board board) {
-		return null;
+
+		return level.chooseAction(board);
 	}
 
 
