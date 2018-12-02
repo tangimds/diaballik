@@ -15,7 +15,8 @@ public class NoobLevel implements Level {
 
 	private Action pickAction(final Board board) {
 		final ArrayList<Piece> blackPieces = new ArrayList<>();
-		board.getPieces().stream().filter(p -> p.getColor() == Color.BLACK).forEach(blackPieces::add);
+		board.getPieces().stream().filter(p -> p.getColor() == Color.BLACK && !p.equals(board.getCurrentBlackHolder())).forEach(blackPieces::add);
+		final Piece blackHolder = board.getCurrentBlackHolder();
 		Collections.shuffle(blackPieces);
 		Optional<Action> a = Optional.empty();
 		final Random r = new Random();
@@ -28,12 +29,12 @@ public class NoobLevel implements Level {
 				a = Optional.of(new MovePiece(p, p.getX(), p.getY() + dl));
 			}
 		} else {//Move a ball
-			final Piece startingPiece = blackPieces.get(0);
+			//final Piece startingPiece = blackPieces.get(0);
 
-			Optional<Piece> optEndingPiece = blackPieces.stream().filter(p -> (p!=startingPiece) && (startingPiece.getX() == (p.getX()) ||
-						(startingPiece.getY() == p.getY()) ||
-						(Math.abs(startingPiece.getX() - p.getX()) == Math.abs(startingPiece.getY() - p.getY())))).findFirst();
-			if(optEndingPiece.isPresent()) a = Optional.of(new MoveBall(startingPiece, optEndingPiece.get()));
+			Optional<Piece> optEndingPiece = blackPieces.stream().filter(p -> (p!=blackHolder) && (blackHolder.getX() == (p.getX()) ||
+						(blackHolder.getY() == p.getY()) ||
+						(Math.abs(blackHolder.getX() - p.getX()) == Math.abs(blackHolder.getY() - p.getY())))).findFirst();
+			if(optEndingPiece.isPresent()) a = Optional.of(new MoveBall(blackHolder, optEndingPiece.get()));
 		}
 
 		if (!a.isPresent() || !a.get().verifyAction(board)) {
