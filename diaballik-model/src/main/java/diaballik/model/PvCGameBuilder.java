@@ -9,7 +9,9 @@ public class PvCGameBuilder extends GameBuilder {
 
 		final Player aiPlayer = new AIPlayer(name2, Color.BLACK, Difficulty.values()[difficulty]);
 
-		return new Game(hPlayer, aiPlayer, scnr);
+		final Game game = new Game(hPlayer, aiPlayer, scnr);
+		game.setLevel(lvl);
+		return game;
 	}
 
 	@Override
