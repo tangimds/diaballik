@@ -1,6 +1,5 @@
 package diaballik.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -9,13 +8,13 @@ public class NoobLevel implements Level {
 
 	@Override
 	public Action chooseAction(final Board board) {
-
+		return pickAction(board);
 	}
 
 	public Action pickAction(final Board board){
 		final ArrayList<Piece> blackPieces = new ArrayList<>();
 		board.getPieces().stream().filter(p -> p.getColor() == Color.BLACK).forEach(blackPieces::add);
-		final Action a;
+		Action a = null;
 		final Random r = new Random();
 		if(r.nextBoolean()){//Move a piece
 			Collections.shuffle(blackPieces);
@@ -32,7 +31,7 @@ public class NoobLevel implements Level {
 
 		}
 
-		if(!a.verifyAction()) a = pickAction(board);
+		if(!a.verifyAction(board)) a = pickAction(board);
 		return a;
 	}
 

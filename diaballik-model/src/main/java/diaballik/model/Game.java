@@ -11,7 +11,7 @@ public class Game {
 	private int id;
 	private ArrayList<Action> actions;
 	private Board board;
-	private Level level;
+	private Difficulty difficulty;
 	private Player p1;
 	private Player p2;
 
@@ -69,8 +69,8 @@ public class Game {
 		nbTurn = t;
 	}
 
-	public void setLevel(Level lvl) {
-		this.level = lvl;
+	public void setDifficulty(Difficulty difficulty) {
+		this.difficulty= difficulty;
 	}
 
 	public void playHuman(Board b) {
