@@ -15,7 +15,7 @@ public class RandomBoardBuilder implements BoardBuilder {
 	public Board buildBoard() {
 		final Board board = new Board();
 		final ArrayList<Piece> pieces = new ArrayList<>();
-		Random r = new Random();
+		final Random r = new Random();
 		//White pieces
 		//Populating the board
 		IntStream.rangeClosed(1, 7).forEach(x -> pieces.add(new Piece(Color.WHITE, x, 1)));

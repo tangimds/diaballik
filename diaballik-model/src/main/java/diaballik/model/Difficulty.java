@@ -1,7 +1,7 @@
 package diaballik.model;
 
 public enum Difficulty {
-	NOOB(0), STARTING(1), PROGRESSIVE(1);
+	NOOB(0), STARTING(1), PROGRESSIVE(2);
 
 	private int value;
 

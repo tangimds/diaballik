@@ -15,6 +15,7 @@ import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public final class Main {
+    //TODO : regler problemes checkstyle
     // Base URI the Grizzly HTTP server will listen on
     // When building docker images, replace the address with http://0.0.0.0:4444/
     // http://localhost:4444/ is for testing purpose only.

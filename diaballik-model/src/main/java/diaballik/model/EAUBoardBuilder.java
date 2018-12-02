@@ -21,7 +21,7 @@ public class EAUBoardBuilder implements BoardBuilder {
 		//Populating the board
 		IntStream.rangeClosed(1, 7).forEach(x -> pieces.add(new Piece(Color.WHITE, x, 1)));
 		//Transforming 2 white pieces to black
-		pieces.stream().filter(p -> ((p.getX() == randomVal.get(0)) || (p.getX() == randomVal.get(1))) && p.getY()==1).forEach(p -> p.setColor(Color.BLACK));
+		pieces.stream().filter(p -> ((p.getX() == randomVal.get(0)) || (p.getX() == randomVal.get(1))) && p.getY() == 1).forEach(p -> p.setColor(Color.BLACK));
 		//Setting the white ball holder
 		final Optional<Piece> whiteHolder = pieces.stream().filter(p -> p.getX() == 4 && p.getColor() == Color.WHITE).findFirst();
 		whiteHolder.ifPresent(board::setCurrentWhiteHolder);
@@ -32,7 +32,7 @@ public class EAUBoardBuilder implements BoardBuilder {
 		//Populating the board
 		IntStream.rangeClosed(1, 7).forEach(x -> pieces.add(new Piece(Color.BLACK, x, 7)));
 		//Transforming 2 black pieces to white
-		pieces.stream().filter(p -> ((p.getX() == randomVal.get(0)) || (p.getX() == randomVal.get(1))) && p.getY()==7).forEach(p -> p.setColor(Color.WHITE));
+		pieces.stream().filter(p -> ((p.getX() == randomVal.get(0)) || (p.getX() == randomVal.get(1))) && p.getY() == 7).forEach(p -> p.setColor(Color.WHITE));
 		//Setting the black ball holder
 		final Optional<Piece> blackHolder = pieces.stream().filter(p -> p.getX() == 4 && p.getColor() == Color.BLACK).findFirst();
 		blackHolder.ifPresent(board::setCurrentBlackHolder);

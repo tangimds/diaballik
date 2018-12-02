@@ -57,7 +57,7 @@ public class GameResource {
 	@GET
 	@Path("/savedGames/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game savedGames(){
+	public Game savedGames() {
 		return null;
 	}
 
@@ -66,14 +66,14 @@ public class GameResource {
 	@GET
 	@Path("/save/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game save(){
+	public Game save() {
 		return null;
 	}
 
 	@GET
 	@Path("/quit/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game quit(){
+	public Game quit() {
 		return null;
 	}
 
@@ -81,14 +81,14 @@ public class GameResource {
 	@GET
 	@Path("/replay/redo/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game redo(){
+	public Game redo() {
 		return null;
 	}
 
 	@GET
 	@Path("/replay/undo")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game undo(){
+	public Game undo() {
 		return null;
 	}
 
@@ -97,10 +97,10 @@ public class GameResource {
 	@Path("movePiece/{color}/{x1}/{y1}/{x2}/{y2}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game movePiece(@PathParam("color") final String color,
-						   @PathParam("x1") final String x1,
-						   @PathParam("y1") final String y1,
-						   @PathParam("x2") final String x2,
-						   @PathParam("y2") final String y2) {
+						  @PathParam("x1") final String x1,
+						  @PathParam("y1") final String y1,
+						  @PathParam("x2") final String x2,
+						  @PathParam("y2") final String y2) {
 		return null;
 	}
 
@@ -108,10 +108,10 @@ public class GameResource {
 	@Path("moveBall/{color}/{x1}/{y1}/{x2}/{y2}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game moveBall(@PathParam("color") final String color,
-						   @PathParam("x1") final String x1,
-						   @PathParam("y1") final String y1,
-						   @PathParam("x2") final String x2,
-						   @PathParam("y2") final String y2) {
+						 @PathParam("x1") final String x1,
+						 @PathParam("y1") final String y1,
+						 @PathParam("x2") final String x2,
+						 @PathParam("y2") final String y2) {
 		return null;
 	}
 }

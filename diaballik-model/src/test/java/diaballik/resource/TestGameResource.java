@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 public class TestGameResource {
+    //TODO : check comment faire les tests sur GameRessource
     @SuppressWarnings("unused")
     @RegisterExtension
     JerseyExtension jerseyExtension = new JerseyExtension(this::configureJersey);

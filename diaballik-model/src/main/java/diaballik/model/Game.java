@@ -74,7 +74,7 @@ public class Game {
 	}
 
 	public void setDifficulty(Difficulty difficulty) {
-		this.difficulty= difficulty;
+		this.difficulty = difficulty;
 	}
 
 	public void playHuman(Board b) {

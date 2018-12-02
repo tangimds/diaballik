@@ -31,10 +31,12 @@ public class NoobLevel implements Level {
 		} else {//Move a ball
 			//final Piece startingPiece = blackPieces.get(0);
 
-			Optional<Piece> optEndingPiece = blackPieces.stream().filter(p -> (p!=blackHolder) && (blackHolder.getX() == (p.getX()) ||
-						(blackHolder.getY() == p.getY()) ||
-						(Math.abs(blackHolder.getX() - p.getX()) == Math.abs(blackHolder.getY() - p.getY())))).findFirst();
-			if(optEndingPiece.isPresent()) a = Optional.of(new MoveBall(blackHolder, optEndingPiece.get()));
+			Optional<Piece> optEndingPiece = blackPieces.stream().filter(p -> (p != blackHolder) && (blackHolder.getX() == (p.getX()) ||
+					(blackHolder.getY() == p.getY()) ||
+					(Math.abs(blackHolder.getX() - p.getX()) == Math.abs(blackHolder.getY() - p.getY())))).findFirst();
+			if (optEndingPiece.isPresent()) {
+				a = Optional.of(new MoveBall(blackHolder, optEndingPiece.get()));
+			}
 		}
 
 		if (!a.isPresent() || !a.get().verifyAction(board)) {
