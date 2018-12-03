@@ -167,22 +167,4 @@ public class Board {
 		});
 		return str[0];
 	}
-
-
-	public static void main(final String[] args) {
-		/*
-		final StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
-		final Board boardStandard = standardBoardBuilder.buildBoard();
-		System.out.println("Standard\n"+boardStandard.toString());
-
-		final RandomBoardBuilder randomBoardBuilder = new RandomBoardBuilder();
-		final Board boardRandom = randomBoardBuilder.buildBoard();
-		System.out.println("Random\n"+boardRandom.toString());
-
-		final EAUBoardBuilder eauBoardBuilder = new EAUBoardBuilder();
-		final Board boardEau = eauBoardBuilder.buildBoard();
-		System.out.println("Ennemy among us\n"+boardEau.toString());
-		*/
-	}
-
 }

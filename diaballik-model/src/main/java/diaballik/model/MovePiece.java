@@ -62,16 +62,5 @@ public class MovePiece implements Action {
 
 		return moveAuthorized && !caseOccupied;
 	}
-
-	public static void main(final String[] args) {
-		final StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
-		final Board board = standardBoardBuilder.buildBoard();
-
-		//move la piece (3,1) en (3,2)
-		final MovePiece mp = new MovePiece(board.getPiece(3, 1), 3, 2);
-		System.out.println("dx : " + mp.dx);
-		System.out.println("dy : " + mp.dy);
-		System.out.println("autorise : " + mp.verifyAction(board));
-	}
 }
 
