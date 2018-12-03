@@ -1,8 +1,5 @@
 package diaballik.model;
 
-import java.util.Optional;
-import java.util.stream.IntStream;
-
 public class MoveBall implements Action {
 
 	private Piece startingPiece;
@@ -23,7 +20,7 @@ public class MoveBall implements Action {
 	}
 
 	@Override
-	public boolean verifyAction(Board b) {
+	public boolean verifyAction(final Board b) {
 
 		//check the rules
 		final boolean moveVertical = startingPiece.getX() == endingPiece.getX();

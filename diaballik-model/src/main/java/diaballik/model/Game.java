@@ -1,8 +1,6 @@
 package diaballik.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class Game {
 
@@ -73,15 +71,15 @@ public class Game {
 		nbTurn = t;
 	}
 
-	public void setDifficulty(Difficulty difficulty) {
+	public void setDifficulty(final Difficulty difficulty) {
 		this.difficulty = difficulty;
 	}
 
-	public void playHuman(Board b) {
+	public void playHuman(final Board b) {
 		p1.play(b);
 	}
 
-	public void playAI(Board b) {
+	public void playAI(final Board b) {
 		p2.play(b).execute(b);
 	}
 

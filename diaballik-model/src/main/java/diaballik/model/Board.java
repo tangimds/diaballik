@@ -1,16 +1,15 @@
 package diaballik.model;
 
-import javax.print.attribute.IntegerSyntax;
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class Board {
 
-	public static final String ANSI_BLUE = "\u001B[34m";
-	public static final String ANSI_RESET = "\u001B[0m";
-	public static final String ANSI_RED = "\u001B[31m";
+	//ANSI colors for board representation
+	private static final String ANSI_BLUE = "\u001B[34m";
+	private static final String ANSI_RESET = "\u001B[0m";
+	private static final String ANSI_RED = "\u001B[31m";
 
 	private Piece currentWhiteHolder;
 	private Piece currentBlackHolder;
@@ -25,19 +24,19 @@ public class Board {
 		return pieces;
 	}
 
-	public void setPieces(ArrayList<Piece> p) {
+	public void setPieces(final ArrayList<Piece> p) {
 		pieces = p;
 	}
 
-	public void addPiece(Piece p) {
+	public void addPiece(final Piece p) {
 		pieces.add(p);
 	}
 
-	public void setCurrentWhiteHolder(Piece p) {
+	public void setCurrentWhiteHolder(final Piece p) {
 		currentWhiteHolder = p;
 	}
 
-	public void setCurrentBlackHolder(Piece p) {
+	public void setCurrentBlackHolder(final Piece p) {
 		currentBlackHolder = p;
 	}
 
@@ -75,7 +74,7 @@ public class Board {
 	}
 
 	public Piece moveBall(final Piece p) {
-		Color color = p.getColor();
+		final Color color = p.getColor();
 		if (color == Color.WHITE) {
 			currentWhiteHolder = p;
 		} else {
@@ -94,6 +93,7 @@ public class Board {
 		}
 	}
 
+	@Override
 	public String toString() {
 
 		//starting by saying explicitly the coordinates of the holders

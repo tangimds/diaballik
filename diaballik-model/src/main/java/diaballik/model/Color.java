@@ -1,3 +1,3 @@
 package diaballik.model;
 
-public enum Color {WHITE, BLACK};
+public enum Color { WHITE, BLACK};
