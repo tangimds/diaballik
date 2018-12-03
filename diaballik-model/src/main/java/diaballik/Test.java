@@ -171,7 +171,7 @@ public class Test {
 		//test.testBoard();
 		//test.testMoveBall();
 		//test.testMovePiece();
-		test.testProgressiveLevel();
+		test.testStartingLevel();
 
 	}
 }
