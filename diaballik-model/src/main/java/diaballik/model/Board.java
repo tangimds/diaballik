@@ -84,14 +84,13 @@ public class Board {
 		return p;
 	}
 
-	public Color win() {
-		//TODO : faire optional
+	public Optional<Color> win() {
 		if (currentBlackHolder.getY() == 1) {
-			return Color.BLACK;
+			return Optional.of(Color.BLACK);
 		} else if (currentWhiteHolder.getY() == 7) {
-			return Color.WHITE;
+			return Optional.of(Color.WHITE);
 		} else {
-			return null;
+			return Optional.empty();
 		}
 	}
 
