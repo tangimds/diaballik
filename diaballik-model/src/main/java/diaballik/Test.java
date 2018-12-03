@@ -140,13 +140,38 @@ public class Test {
 		}
 	}
 
+	public void testStartingLevel() {
+		GameBuilder builder = new PvCGameBuilder();
+		Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.STARTING.getValue());
+		System.out.println(game.getBoard().toStringColor());
+
+		for (int i = 0; i < 50; i++) {
+			System.out.println("----------------");
+			game.playAI(game.getBoard());
+			System.out.println(game.getBoard().toStringColor());
+		}
+	}
+
+
+	public void testProgressiveLevel() {
+		GameBuilder builder = new PvCGameBuilder();
+		Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.PROGRESSIVE.getValue());
+		System.out.println(game.getBoard().toStringColor());
+
+		for (int i = 0; i < 50; i++) {
+			System.out.println("----------------");
+			game.playAI(game.getBoard());
+			System.out.println(game.getBoard().toStringColor());
+		}
+	}
+
 	public static void main(final String[] args) {
 		final Test test = new Test();
 		System.out.println("************** TEST **************\n");
 		//test.testBoard();
 		//test.testMoveBall();
 		//test.testMovePiece();
-		test.testNoobLevel();
+		test.testProgressiveLevel();
 
 	}
 }
