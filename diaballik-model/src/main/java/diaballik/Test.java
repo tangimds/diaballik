@@ -1,9 +1,22 @@
 package diaballik;
 
-import diaballik.model.*;
 
 
-import static diaballik.model.Color.WHITE;
+import diaballik.model.Board;
+import diaballik.model.Color;
+import diaballik.model.Difficulty;
+import diaballik.model.EAUBoardBuilder;
+import diaballik.model.Game;
+import diaballik.model.GameBuilder;
+import diaballik.model.MoveBall;
+import diaballik.model.MovePiece;
+import diaballik.model.Piece;
+import diaballik.model.PvCGameBuilder;
+import diaballik.model.RandomBoardBuilder;
+import diaballik.model.Scenario;
+import diaballik.model.StandardBoardBuilder;
+
+import java.util.stream.IntStream;
 
 public class Test {
 
@@ -118,51 +131,51 @@ public class Test {
 	public void testMovePiece() {
 		System.out.println("***** MovePiece *****");
 
-		StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
-		Board board = standardBoardBuilder.buildBoard();
+		final StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
+		final Board board = standardBoardBuilder.buildBoard();
 
 		//move la piece (3,1) en (3,2)
-		MovePiece mp = new MovePiece(board.getPiece(3, 1), 3, 2);
+		final MovePiece mp = new MovePiece(board.getPiece(3, 1), 3, 2);
 		System.out.println("dx : " + mp.getDx());
 		System.out.println("dy : " + mp.getDy());
 		System.out.println("autorise : " + mp.verifyAction(board));
 	}
 
 	public void testNoobLevel() {
-		GameBuilder builder = new PvCGameBuilder();
-		Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.NOOB.getValue());
+		final GameBuilder builder = new PvCGameBuilder();
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.NOOB.getValue());
 		System.out.println(game.getBoard().toStringColor());
 
-		for (int i = 0; i < 50; i++) {
+		IntStream.rangeClosed(0, 50).forEach(i -> {
 			System.out.println("----------------");
 			game.playAI(game.getBoard());
 			System.out.println(game.getBoard().toStringColor());
-		}
+		});
 	}
 
 	public void testStartingLevel() {
-		GameBuilder builder = new PvCGameBuilder();
-		Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.STARTING.getValue());
+		final GameBuilder builder = new PvCGameBuilder();
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.STARTING.getValue());
 		System.out.println(game.getBoard().toStringColor());
 
-		for (int i = 0; i < 50; i++) {
-			System.out.println("----------------");
+		IntStream.rangeClosed(0, 200).forEach(i -> {
+			System.out.println("----------------"+i);
 			game.playAI(game.getBoard());
 			System.out.println(game.getBoard().toStringColor());
-		}
+		});
 	}
 
 
 	public void testProgressiveLevel() {
-		GameBuilder builder = new PvCGameBuilder();
-		Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.PROGRESSIVE.getValue());
+		final GameBuilder builder = new PvCGameBuilder();
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.PROGRESSIVE.getValue());
 		System.out.println(game.getBoard().toStringColor());
 
-		for (int i = 0; i < 50; i++) {
+		IntStream.rangeClosed(0, 50).forEach(i -> {
 			System.out.println("----------------");
 			game.playAI(game.getBoard());
 			System.out.println(game.getBoard().toStringColor());
-		}
+		});
 	}
 
 	public static void main(final String[] args) {

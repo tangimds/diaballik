@@ -1,10 +1,7 @@
 package diaballik.model;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
-
-import static diaballik.model.Color.WHITE;
 
 public class MovePiece implements Action {
 
@@ -32,9 +29,9 @@ public class MovePiece implements Action {
 
 	@Override
 	public void execute(final Board board) {
-		Optional<Piece> optPiece = board.getPieces().stream().filter(p -> p == piece).findFirst();
+		final Optional<Piece> optPiece = board.getPieces().stream().filter(p -> p == piece).findFirst();
 		if (optPiece.isPresent()) {
-			Piece p = optPiece.get();
+			final Piece p = optPiece.get();
 			p.setPosition(p.getX() + dx, p.getY() + dy);
 		}
 	}
@@ -50,7 +47,7 @@ public class MovePiece implements Action {
 	}
 
 	@Override
-	public boolean verifyAction(Board b) {
+	public boolean verifyAction(final Board b) {
 		final boolean moveAuthorized = Math.abs(dx) <= 1 // decale pas plus de 1 case
 				&& Math.abs(dy) <= 1
 				&& (Math.abs(dx) + Math.abs(dy) <= 1) // uniquement horizontale/veticale
@@ -87,15 +84,5 @@ public class MovePiece implements Action {
 		return Objects.hash(getDx(), getDy(), getPiece());
 	}
 
-	public static void main(final String[] args) {
-		StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
-		Board board = standardBoardBuilder.buildBoard();
-
-		//move la piece (3,1) en (3,2)
-		MovePiece mp = new MovePiece(board.getPiece(3, 1), 3, 2);
-		System.out.println("dx : " + mp.dx);
-		System.out.println("dy : " + mp.dy);
-		System.out.println("autorise : " + mp.verifyAction(board));
-	}
 }
 

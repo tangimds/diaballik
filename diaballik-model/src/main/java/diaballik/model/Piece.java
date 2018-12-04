@@ -40,7 +40,7 @@ public class Piece {
 		color = c;
 	}
 
-	public boolean isBetween(Piece p1, Piece p2) {
+	public boolean isBetween(final Piece p1, final Piece p2) {
 
 		/*
 		v1 = (x1,y1) vector between p1 and this

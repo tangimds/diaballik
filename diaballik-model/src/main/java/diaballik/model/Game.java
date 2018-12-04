@@ -11,7 +11,7 @@ public class Game {
 
 	private int nbTurn;
 	private Scenario scenario;
-	private int id;
+	//private int id;
 	private ArrayList<Action> actions;
 	private Board board;
 	private Player p1;
@@ -80,11 +80,11 @@ public class Game {
 	}
 
 
-	public void playHuman(Board b) {
+	public void playHuman(final Board b) {
 		p1.play(b);
 	}
 
-	public void playAI(Board b) {
+	public void playAI(final Board b) {
 		p2.play(b).execute(b);
 	}
 
@@ -110,7 +110,7 @@ public class Game {
 		}
 		Game game = (Game) o;
 		return nbTurn == game.nbTurn &&
-				id == game.id &&
+				//id == game.id &&
 				getScenario() == game.getScenario() &&
 				Objects.equals(actions, game.actions) &&
 				Objects.equals(getBoard(), game.getBoard()) &&
@@ -121,6 +121,7 @@ public class Game {
 	@Override
 	public int hashCode() {
 
-		return Objects.hash(nbTurn, getScenario(), id, actions, getBoard(), p1, p2);
+		//return Objects.hash(nbTurn, getScenario(), id, actions, getBoard(), p1, p2);
+		return Objects.hash(nbTurn, getScenario(), actions, getBoard(), p1, p2);
 	}
 }

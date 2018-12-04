@@ -9,42 +9,17 @@ public class StartingLevel implements Level {
 
 	@Override
 	public Action chooseAction(final Board board) {
-		//TODO : maybe use r.nextint(100)
+		//TODO : regler complexité cyclomatique
 		final ArrayList<Piece> blackPieces = new ArrayList<>();
 		board.getPieces().stream().filter(p -> p.getColor() == Color.BLACK && !p.equals(board.getCurrentBlackHolder())).forEach(blackPieces::add);
 		final Piece blackHolder = board.getCurrentBlackHolder();
 		Collections.shuffle(blackPieces);
-		Optional<Action> a = Optional.empty();
+		Optional<Action> a;
 		final Random r = new Random();
-		final Double proba = r.nextDouble();
-		if (proba > 0.6) {//Move a piece in front
-			final Piece p = blackPieces.get(0);
-			a = Optional.of(new MovePiece(p, p.getX(), p.getY() - 1));
-
-		} else if (proba > 0.2) {//Move a ball to front
-			Optional<Piece> optEndingPiece = blackPieces.stream().filter(p -> (p != blackHolder) &&
-					(blackHolder.getY() - p.getY() > 0) &&
-					(blackHolder.getX() == (p.getX()) ||
-							(blackHolder.getY() == p.getY()) ||
-							(Math.abs(blackHolder.getX() - p.getX()) == Math.abs(blackHolder.getY() - p.getY())))).findFirst();
-			if (optEndingPiece.isPresent()) {
-				a = Optional.of(new MoveBall(blackHolder, optEndingPiece.get()));
-			}
-		} else if (proba > 0.1) {//Move a piece in whatever direction
-			final Piece p = blackPieces.get(0);
-			int dl = -1 + 2 * r.nextInt(1);
-			if (r.nextBoolean()) {
-				a = Optional.of(new MovePiece(p, p.getX() + dl, p.getY()));
-			} else {
-				a = Optional.of(new MovePiece(p, p.getX(), p.getY() + dl));
-			}
-		} else {//Move a ball
-			Optional<Piece> optEndingPiece = blackPieces.stream().filter(p -> (p != blackHolder) && (blackHolder.getX() == (p.getX()) ||
-					(blackHolder.getY() == p.getY()) ||
-					(Math.abs(blackHolder.getX() - p.getX()) == Math.abs(blackHolder.getY() - p.getY())))).findFirst();
-			if (optEndingPiece.isPresent()) {
-				a = Optional.of(new MoveBall(blackHolder, optEndingPiece.get()));
-			}
+		if (r.nextBoolean()) { //move a Piece
+			a = actionMovePiece(blackPieces);
+		} else { //move the Ball
+			a = actionMoveBall(blackPieces, blackHolder);
 		}
 
 		if (!a.isPresent() || !a.get().verifyAction(board)) {
@@ -52,5 +27,41 @@ public class StartingLevel implements Level {
 		}
 		return a.get();
 	}
+
+	private Optional<Action> actionMovePiece(final ArrayList<Piece> pieces) {
+		Optional<Action> a = Optional.empty();
+		Collections.shuffle(pieces);
+		final Random r = new Random();
+		if (r.nextDouble() > 0.2) {
+			//move piece in front
+			final Piece p = pieces.get(0);
+			a = Optional.of(new MovePiece(p, p.getX(), p.getY() - 1));
+		} else {
+			// move piece randomly
+			final Piece p = pieces.get(0);
+			final int dl = -1 + 2 * r.nextInt(1);
+			if (r.nextBoolean()) {
+				a = Optional.of(new MovePiece(p, p.getX() + dl, p.getY()));
+			} else {
+				a = Optional.of(new MovePiece(p, p.getX(), p.getY() + dl));
+			}
+		}
+		return a;
+	}
+
+	private Optional<Action> actionMoveBall(final ArrayList<Piece> pieces, final Piece holder) {
+		Optional<Action> a = Optional.empty();
+		Collections.shuffle(pieces);
+		final Optional<Piece> optEndingPiece = pieces.stream().filter(p -> (p != holder) &&
+				(holder.getY() - p.getY() >= 0) &&
+				(holder.getX() == (p.getX()) ||
+						(holder.getY() == p.getY()) ||
+						(Math.abs(holder.getX() - p.getX()) == Math.abs(holder.getY() - p.getY())))).findFirst();
+		if (optEndingPiece.isPresent()) {
+			a = Optional.of(new MoveBall(holder, optEndingPiece.get()));
+		}
+		return a;
+	}
+
 
 }

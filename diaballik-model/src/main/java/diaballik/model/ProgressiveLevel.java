@@ -2,8 +2,8 @@ package diaballik.model;
 
 public class ProgressiveLevel implements Level {
 
-	final private Level noob;
-	final private Level starting;
+	private final Level noob;
+	private final Level starting;
 	private int tour;
 
 	public ProgressiveLevel() {
@@ -14,12 +14,10 @@ public class ProgressiveLevel implements Level {
 
 	@Override
 	public Action chooseAction(final Board board) {
-		if(tour++/3 < 5) {
+		if (tour++ / 3 < 5) {
 			return this.noob.chooseAction(board);
-		}
-		else {
+		} else {
 			return this.starting.chooseAction(board);
 		}
 	}
-
 }

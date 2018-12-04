@@ -3,9 +3,9 @@ package diaballik.model;
 public enum Scenario {
 	STANDARD(0), RANDOM(1), EAU(2);
 
-	private int value;
+	private final int value;
 
-	private Scenario(int value) {
+	Scenario(final int value) {
 		this.value = value;
 	}
 
