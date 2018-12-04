@@ -12,4 +12,4 @@ public enum Scenario {
 	public int getValue() {
 		return value;
 	}
-};
+}
