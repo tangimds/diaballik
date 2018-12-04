@@ -1,12 +1,18 @@
 package diaballik.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Objects;
+
 public class Piece {
 
 	private Color color;
 	private int x;
 	private int y;
 
-	public Piece(final Color color, final int x, final int y) {
+	@JsonCreator
+	public Piece(@JsonProperty("color") final Color color, @JsonProperty("x") final int x, @JsonProperty("y") final int y) {
 		this.color = color;
 		this.x = x;
 		this.y = y;
@@ -54,5 +60,25 @@ public class Piece {
 		//System.out.println("same direction : "+sameDirection);
 
 		return colinear && sameDirection && shorter;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Piece)) {
+			return false;
+		}
+		Piece piece = (Piece) o;
+		return getX() == piece.getX() &&
+				getY() == piece.getY() &&
+				getColor() == piece.getColor();
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(getColor(), getX(), getY());
 	}
 }

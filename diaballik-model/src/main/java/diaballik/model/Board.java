@@ -3,6 +3,7 @@ package diaballik.model;
 import javax.print.attribute.IntegerSyntax;
 import javax.swing.text.html.Option;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -168,6 +169,25 @@ public class Board {
 		return str[0];
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Board)) {
+			return false;
+		}
+		Board board = (Board) o;
+		return Objects.equals(getCurrentWhiteHolder(), board.getCurrentWhiteHolder()) &&
+				Objects.equals(getCurrentBlackHolder(), board.getCurrentBlackHolder()) &&
+				Objects.equals(getPieces(), board.getPieces());
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(getCurrentWhiteHolder(), getCurrentBlackHolder(), getPieces());
+	}
 
 	public static void main(final String[] args) {
 		/*

@@ -1,10 +1,12 @@
 package diaballik.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import diaballik.model.*;
 import diaballik.serialization.DiabalikJacksonProvider;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.security.DigestInputStream;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,10 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestMarshalling {
     static Stream<Object> getInstancesToMarshall() {
-//		final Player p1 = new Player(); //TODO to update
-//		etc.
+		final GameBuilder gameBuilder = new PvCGameBuilder();
+		final Game game = gameBuilder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.NOOB.getValue());
 
-        return Stream.of(Color.RED); //p1); // Add other marshallable elements
+		//Difficulty diff = Difficulty.NOOB;
+
+		return Stream.of(game); //p1); // Add other marshallable elements
     }
 
     @ParameterizedTest

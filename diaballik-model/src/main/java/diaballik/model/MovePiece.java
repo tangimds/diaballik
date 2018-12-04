@@ -1,6 +1,7 @@
 package diaballik.model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Optional;
 
 import static diaballik.model.Color.WHITE;
@@ -64,6 +65,26 @@ public class MovePiece implements Action {
 
 
 		return moveAuthorized && !caseOccupied;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof MovePiece)) {
+			return false;
+		}
+		MovePiece movePiece = (MovePiece) o;
+		return getDx() == movePiece.getDx() &&
+				getDy() == movePiece.getDy() &&
+				Objects.equals(getPiece(), movePiece.getPiece());
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(getDx(), getDy(), getPiece());
 	}
 
 	public static void main(final String[] args) {

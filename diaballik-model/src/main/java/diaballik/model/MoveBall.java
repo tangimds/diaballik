@@ -1,5 +1,6 @@
 package diaballik.model;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -71,6 +72,24 @@ public class MoveBall implements Action {
 
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof MoveBall)) {
+			return false;
+		}
+		MoveBall moveBall = (MoveBall) o;
+		return Objects.equals(startingPiece, moveBall.startingPiece) &&
+				Objects.equals(endingPiece, moveBall.endingPiece);
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(startingPiece, endingPiece);
+	}
 
 	public static void main(final String[] args) {
 		final Piece p1 = new Piece(Color.WHITE, 5, 4);

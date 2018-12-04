@@ -1,8 +1,11 @@
 package diaballik.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.Objects;
 
 public class Game {
 
@@ -11,21 +14,20 @@ public class Game {
 	private int id;
 	private ArrayList<Action> actions;
 	private Board board;
-	private Difficulty difficulty;
 	private Player p1;
 	private Player p2;
 
-
-	public Game(final Player p1, final Player p2, final Scenario mode) {
+	@JsonCreator
+	public Game(@JsonProperty("p1") final Player p1, @JsonProperty("p2") final Player p2, @JsonProperty("scenario") final Scenario scenario) {
 
 		//initialization of the arguments
 		this.p1 = p1;
 		this.p2 = p2;
-		this.scenario = mode;
+		this.scenario = scenario;
 		this.nbTurn = 0;
 		this.actions = new ArrayList<>();
 
-		switch (Scenario.values()[mode.ordinal()]) {
+		switch (scenario) {
 			case STANDARD:
 				final StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
 				this.board = standardBoardBuilder.buildBoard();
@@ -45,10 +47,12 @@ public class Game {
 	}
 
 	// getters and setters
+	@JsonIgnore
 	public Player getPlayer1() {
 		return p1;
 	}
 
+	@JsonIgnore
 	public Player getPlayer2() {
 		return p2;
 	}
@@ -57,10 +61,12 @@ public class Game {
 		return scenario;
 	}
 
+	@JsonIgnore
 	public int getTurn() {
 		return nbTurn;
 	}
 
+	@JsonIgnore
 	public int getNbActions() {
 		return actions.size();
 	}
@@ -73,9 +79,6 @@ public class Game {
 		nbTurn = t;
 	}
 
-	public void setDifficulty(Difficulty difficulty) {
-		this.difficulty = difficulty;
-	}
 
 	public void playHuman(Board b) {
 		p1.play(b);
@@ -97,4 +100,27 @@ public class Game {
 
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Game)) {
+			return false;
+		}
+		Game game = (Game) o;
+		return nbTurn == game.nbTurn &&
+				id == game.id &&
+				getScenario() == game.getScenario() &&
+				Objects.equals(actions, game.actions) &&
+				Objects.equals(getBoard(), game.getBoard()) &&
+				Objects.equals(p1, game.p1) &&
+				Objects.equals(p2, game.p2);
+	}
+
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(nbTurn, getScenario(), id, actions, getBoard(), p1, p2);
+	}
 }

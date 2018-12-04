@@ -1,9 +1,13 @@
 package diaballik.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class HumanPlayer extends Player {
 
-	public HumanPlayer(final String n, final Color c) {
-		super(n, c);
+	@JsonCreator
+	public HumanPlayer(@JsonProperty("name") final String name, @JsonProperty("color") final Color color) {
+		super(name, color);
 	}
 
 	@Override

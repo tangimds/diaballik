@@ -1,12 +1,23 @@
 package diaballik.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Objects;
+
 public class AIPlayer extends Player {
 
+	private Difficulty difficulty;
+
+	@JsonIgnore
 	private Level level;
 
-	public AIPlayer(final String n, final Color c, final Difficulty difficulty) {
-		super(n, c);
-		switch (difficulty) {
+	@JsonCreator
+	public AIPlayer(@JsonProperty("name") final String name, @JsonProperty("color") final Color color, @JsonProperty("difficulty") final Difficulty difficulty) {
+		super(name, color);
+		this.difficulty = difficulty;
+		switch (this.difficulty) {
 			case NOOB:
 				level = new NoobLevel();
 				break;
@@ -36,5 +47,24 @@ public class AIPlayer extends Player {
 		return level.chooseAction(board);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof AIPlayer)) {
+			return false;
+		}
+		if (!super.equals(o)) {
+			return false;
+		}
+		AIPlayer aiPlayer = (AIPlayer) o;
+		return difficulty == aiPlayer.difficulty;
+	}
 
+	@Override
+	public int hashCode() {
+
+		return Objects.hash(super.hashCode(), difficulty, getLevel());
+	}
 }
