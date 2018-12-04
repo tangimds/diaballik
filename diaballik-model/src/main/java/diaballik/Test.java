@@ -158,8 +158,8 @@ public class Test {
 		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.STARTING.getValue());
 		System.out.println(game.getBoard().toStringColor());
 
-		IntStream.rangeClosed(0, 50).forEach(i -> {
-			System.out.println("----------------");
+		IntStream.rangeClosed(0, 200).forEach(i -> {
+			System.out.println("----------------"+i);
 			game.playAI(game.getBoard());
 			System.out.println(game.getBoard().toStringColor());
 		});

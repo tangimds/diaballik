@@ -53,7 +53,7 @@ public class StartingLevel implements Level {
 		Optional<Action> a = Optional.empty();
 		Collections.shuffle(pieces);
 		final Optional<Piece> optEndingPiece = pieces.stream().filter(p -> (p != holder) &&
-				(holder.getY() - p.getY() > 0) &&
+				(holder.getY() - p.getY() >= 0) &&
 				(holder.getX() == (p.getX()) ||
 						(holder.getY() == p.getY()) ||
 						(Math.abs(holder.getX() - p.getX()) == Math.abs(holder.getY() - p.getY())))).findFirst();

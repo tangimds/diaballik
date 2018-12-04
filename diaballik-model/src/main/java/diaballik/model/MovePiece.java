@@ -22,9 +22,9 @@ public class MovePiece implements Action {
 		return dy;
 	}
 
-	private Piece getPiece() {
+	/*private Piece getPiece() {
 		return piece;
-	}
+	}*/
 
 	@Override
 	public void execute(final Board board) {

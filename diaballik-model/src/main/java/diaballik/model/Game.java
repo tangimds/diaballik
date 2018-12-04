@@ -6,7 +6,7 @@ public class Game {
 
 	private int nbTurn;
 	private Scenario scenario;
-	private int id;
+	//private int id;
 	private ArrayList<Action> actions;
 	private Board board;
 	private Difficulty difficulty;
