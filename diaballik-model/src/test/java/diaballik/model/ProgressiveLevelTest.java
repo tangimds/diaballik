@@ -1,20 +1,17 @@
 package diaballik.model;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AIPlayerTest {
-
+class ProgressiveLevelTest {
 	@Test
-	void testPlay() {
+	void testChooseActionNoob() {
 		final StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
 		Board board = standardBoardBuilder.buildBoard();
-		AIPlayer ai = new AIPlayer("ordi", Color.BLACK, Difficulty.NOOB);
-		Board oldBoard = board.copy();
+		AIPlayer ai = new AIPlayer("a", Color.BLACK, Difficulty.PROGRESSIVE);
 		ai.play(board).execute(board);
-		assertFalse(oldBoard.equals(board));
+		assertTrue(ai.play(board).verifyAction(board));
 	}
 
 }

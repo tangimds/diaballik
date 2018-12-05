@@ -1,6 +1,7 @@
 package diaballik.model;
 
 import java.util.Objects;
+
 public class MoveBall implements Action {
 
 	private Piece startingPiece;
@@ -9,6 +10,14 @@ public class MoveBall implements Action {
 	public MoveBall(final Piece startingPiece, final Piece endingPiece) {
 		this.startingPiece = startingPiece;
 		this.endingPiece = endingPiece;
+	}
+
+	public void setStartingPiece(final Piece p) {
+		startingPiece = p;
+	}
+
+	public void setEndingPiece(final Piece p) {
+		endingPiece = p;
 	}
 
 	@Override
@@ -62,23 +71,33 @@ public class MoveBall implements Action {
 
 	@Override
 	public void redo(final Board board) {
-
+		if (this.verifyAction(board)) {
+			this.execute(board);
+		}
 	}
 
 	@Override
 	public void undo(final Board board) {
-
+		System.out.println("undoing MoveBall");
+		final MoveBall mb = new MoveBall(this.endingPiece, this.startingPiece);
+		System.out.println("VERIFY : " + mb.verifyAction(board));
+		System.out.println("mp" + mb);
+		//System.out.println(board.toStringColor());
+		if (mb.verifyAction(board)) {
+			System.out.println("execute : " + mb);
+			mb.execute(board);
+		}
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) {
 			return true;
 		}
 		if (!(o instanceof MoveBall)) {
 			return false;
 		}
-		MoveBall moveBall = (MoveBall) o;
+		final MoveBall moveBall = (MoveBall) o;
 		return Objects.equals(startingPiece, moveBall.startingPiece) &&
 				Objects.equals(endingPiece, moveBall.endingPiece);
 	}
@@ -89,4 +108,8 @@ public class MoveBall implements Action {
 		return Objects.hash(startingPiece, endingPiece);
 	}
 
+	@Override
+	public String toString() {
+		return "passe from " + startingPiece + " to " + endingPiece;
+	}
 }

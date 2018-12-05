@@ -48,7 +48,7 @@ public class AIPlayer extends Player {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) {
 			return true;
 		}
@@ -58,7 +58,7 @@ public class AIPlayer extends Player {
 		if (!super.equals(o)) {
 			return false;
 		}
-		AIPlayer aiPlayer = (AIPlayer) o;
+		final AIPlayer aiPlayer = (AIPlayer) o;
 		return difficulty == aiPlayer.difficulty;
 	}
 

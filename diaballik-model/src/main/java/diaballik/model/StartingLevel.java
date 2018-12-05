@@ -52,7 +52,7 @@ public class StartingLevel implements Level {
 	private Optional<Action> actionMoveBall(final ArrayList<Piece> pieces, final Piece holder) {
 		Optional<Action> a = Optional.empty();
 		Collections.shuffle(pieces);
-		final Optional<Piece> optEndingPiece = pieces.stream().filter(p -> (p != holder) &&
+		final Optional<Piece> optEndingPiece = pieces.stream().filter(p -> (!p.equals(holder)) &&
 				(holder.getY() - p.getY() >= 0) &&
 				(holder.getX() == (p.getX()) ||
 						(holder.getY() == p.getY()) ||

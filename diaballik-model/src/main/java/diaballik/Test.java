@@ -1,7 +1,6 @@
 package diaballik;
 
 
-
 import diaballik.model.Board;
 import diaballik.model.Color;
 import diaballik.model.Difficulty;
@@ -16,6 +15,7 @@ import diaballik.model.RandomBoardBuilder;
 import diaballik.model.Scenario;
 import diaballik.model.StandardBoardBuilder;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class Test {
@@ -148,7 +148,7 @@ public class Test {
 
 		IntStream.rangeClosed(0, 50).forEach(i -> {
 			System.out.println("----------------");
-			game.playAI();
+			game.play(null);
 			System.out.println(game.getBoard().toStringColor());
 		});
 	}
@@ -160,7 +160,7 @@ public class Test {
 
 		IntStream.rangeClosed(0, 200).forEach(i -> {
 			System.out.println("----------------"+i);
-			game.playAI();
+			game.play(null);
 			System.out.println(game.getBoard().toStringColor());
 		});
 	}
@@ -173,9 +173,45 @@ public class Test {
 
 		IntStream.rangeClosed(0, 50).forEach(i -> {
 			System.out.println("----------------");
-			game.playAI();
+			game.play(null);
 			System.out.println(game.getBoard().toStringColor());
 		});
+	}
+
+	public void testUndoRedo() {
+		final GameBuilder builder = new PvCGameBuilder();
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.STARTING);
+		IntStream.rangeClosed(0, 5).forEach(i -> {
+			System.out.println("\n\n------- coup " + i + " -------");
+			if(game.getTurn()%2 ==0) {
+				Optional<Piece> pieceOptional = game.getBoard().getPieces().stream()
+						.filter(p->p.getX()==game.getBoard().getCurrentWhiteHolder().getX()+1 && p.getY()==game.getBoard().getCurrentWhiteHolder().getY())
+						.findFirst();
+				game.play(new MoveBall(game.getBoard().getCurrentWhiteHolder(), pieceOptional.get()));
+			} else {
+				game.play(null);
+			}
+			System.out.println(game.toString());
+
+		});
+
+		game.previousAction();
+		System.out.println(game.toString());
+
+		game.previousAction();
+		System.out.println(game.toString());
+
+		game.previousAction();
+		System.out.println(game.toString());
+
+		game.nextAction();
+		System.out.println(game.toString());
+
+		game.nextAction();
+		System.out.println(game.toString());
+
+		System.out.println(game.toString());
+
 	}
 
 	public static void main(final String[] args) {
@@ -184,7 +220,7 @@ public class Test {
 		//test.testBoard();
 		//test.testMoveBall();
 		//test.testMovePiece();
-		test.testStartingLevel();
+		test.testUndoRedo();
 
 	}
 }
