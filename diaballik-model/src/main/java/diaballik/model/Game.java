@@ -134,7 +134,7 @@ public class Game {
 	public void save() throws IOException {
 		final ObjectMapper mapper = new DiabalikJacksonProvider().getMapper();
 		final String serializedObject = mapper.writeValueAsString(this);
-		final String path = System.getProperty("user.dir") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
+		final String path = System.getProperty("user.home") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
 		new File(path).mkdir();
 		//TODO : new PrintWriter(	path + "game_"+this.id+".txt", UTF_8.name()))
 		try (PrintWriter out = new PrintWriter(path + "game_" + this.id + ".txt")) {
