@@ -34,6 +34,7 @@ public class MovePiece implements Action {
 			final Piece p = optPiece.get();
 			p.setPosition(p.getX() + dx, p.getY() + dy);
 		}
+		System.out.println(board.toStringColor());
 	}
 
 	@Override
@@ -70,8 +71,11 @@ public class MovePiece implements Action {
 				.anyMatch(p -> p.getX() == piece.getX() + dx
 						&& p.getY() == piece.getY() + dy);
 
+		final boolean isHolder = piece.equals(b.getCurrentBlackHolder())
+				|| piece.equals(b.getCurrentWhiteHolder());
 
-		return moveAuthorized && !caseOccupied;
+
+		return moveAuthorized && !caseOccupied && !isHolder;
 	}
 
 	@Override
