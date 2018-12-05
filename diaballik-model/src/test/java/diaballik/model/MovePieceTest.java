@@ -35,12 +35,33 @@ class MovePieceTest {
 
 	@Test
 	void testRedo() {
-		//TODO : testRedo
+		final GameBuilder builder = new PvCGameBuilder();
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.STARTING);
+		game.play(new MovePiece(game.getBoard().getPiece(4,1), 4,2));
+		game.play(new MovePiece(game.getBoard().getPiece(1,1), 1,2));
+
+		final Board oldBoard = game.getBoard().copy();
+
+		//annule la derniere action
+		game.previousAction();
+		assertNotEquals(oldBoard,game.getBoard(),"old et nouveau board ne sont differents");
+		//refait l'action
+		game.nextAction();
+		assertEquals(game.getBoard(),oldBoard,"testRedo");
 	}
 
 	@Test
 	void testUndo() {
-		//TODO : testUndo
+		final GameBuilder builder = new PvCGameBuilder();
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.STARTING);
+		game.play(new MovePiece(game.getBoard().getPiece(4,1), 4,2));
+		final Board oldBoard = game.getBoard().copy();
+		game.play(new MovePiece(game.getBoard().getPiece(1,1), 1,2));
+
+		//annule la derniere action
+		game.previousAction();
+
+		assertEquals(game.getBoard(),oldBoard,"testRedo");
 	}
 
 	@Test
