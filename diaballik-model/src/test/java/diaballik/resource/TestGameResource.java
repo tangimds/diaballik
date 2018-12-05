@@ -104,10 +104,10 @@ public class TestGameResource {
 		assertEquals(g.getBoard().getPiece(1,1),g.getBoard().getCurrentWhiteHolder());
 		assertNotEquals(g.getBoard().getPiece(4,1),g.getBoard().getCurrentWhiteHolder());
 
-		Response res1 = client.target(baseUri).path("game/replay/undo").request().put(Entity.text(""));
+		Response res1 = client.target(baseUri).path("game/replay/undo").request().get();
 		Game g1 = res1.readEntity(Game.class);
-		assertEquals(g.getBoard().getPiece(4,1),g.getBoard().getCurrentWhiteHolder());
-		assertNotEquals(g.getBoard().getPiece(1,1),g.getBoard().getCurrentWhiteHolder());
+		assertEquals(g1.getBoard().getPiece(4,1),g1.getBoard().getCurrentWhiteHolder());
+		assertNotEquals(g1.getBoard().getPiece(1,1),g1.getBoard().getCurrentWhiteHolder());
 	}
 
 	@Test
@@ -119,14 +119,15 @@ public class TestGameResource {
 		assertEquals(g.getBoard().getPiece(1,1),g.getBoard().getCurrentWhiteHolder());
 		assertNotEquals(g.getBoard().getPiece(4,1),g.getBoard().getCurrentWhiteHolder());
 
-		Response res1 = client.target(baseUri).path("game/replay/undo").request().put(Entity.text(""));
+		Response res1 = client.target(baseUri).path("game/replay/undo").request().get();
+		System.out.println(res1);
 		Game g1 = res1.readEntity(Game.class);
-		assertEquals(g.getBoard().getPiece(4,1),g.getBoard().getCurrentWhiteHolder());
-		assertNotEquals(g.getBoard().getPiece(1,1),g.getBoard().getCurrentWhiteHolder());
+		assertEquals(g1.getBoard().getPiece(4,1),g1.getBoard().getCurrentWhiteHolder());
+		assertNotEquals(g1.getBoard().getPiece(1,1),g1.getBoard().getCurrentWhiteHolder());
 
-		Response res2 = client.target(baseUri).path("game/replay/redo").request().put(Entity.text(""));
+		Response res2 = client.target(baseUri).path("game/replay/redo").request().get();
 		Game g2 = res2.readEntity(Game.class);
-		assertEquals(g.getBoard().getPiece(1,1),g.getBoard().getCurrentWhiteHolder());
-		assertNotEquals(g.getBoard().getPiece(4,1),g.getBoard().getCurrentWhiteHolder());
+		assertEquals(g2.getBoard().getPiece(1,1),g2.getBoard().getCurrentWhiteHolder());
+		assertNotEquals(g2.getBoard().getPiece(4,1),g2.getBoard().getCurrentWhiteHolder());
 	}
 }

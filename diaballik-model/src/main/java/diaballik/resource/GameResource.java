@@ -72,8 +72,7 @@ public class GameResource {
 		this.game = Optional.ofNullable(game);
 		if(this.game.isPresent()) {
 			return Response.ok(this.game.get()).build();
-		}
-		else {
+		} else {
 			return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"La partie n'existe pas !\"}").build();
 		}
 	}
@@ -95,7 +94,7 @@ public class GameResource {
 	@Path("/save/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save() {
-		if(this.game.isPresent()){
+		if(this.game.isPresent()) {
 			try {
 				this.game.get().save();
 				return Response.ok().build();
@@ -118,7 +117,7 @@ public class GameResource {
 
 	//Requêtes de replay
 	@GET
-	@Path("/replay/redo/")
+	@Path("/replay/redo")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response redo() {
 		if(this.game.isPresent()) {

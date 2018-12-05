@@ -1,11 +1,8 @@
 package diaballik.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Utf8;
 import diaballik.serialization.DiabalikJacksonProvider;
-
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,7 +31,7 @@ public class SavedGameBuilder extends GameBuilder {
 		final ObjectMapper mapper = new DiabalikJacksonProvider().getMapper();
 		Object readValue = null;
 		try {
-			readValue = mapper.readValue(new String(encoded,UTF_8), Game.class);
+			readValue = mapper.readValue(new String(encoded, UTF_8), Game.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
