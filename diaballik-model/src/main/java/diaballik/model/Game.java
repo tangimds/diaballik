@@ -189,17 +189,13 @@ public class Game {
 		}
 	}
 
-	public List<String> getSavedGames() {
+	@JsonIgnore
+	public static List<String> getSavedGames() {
 		final String path = System.getProperty("user.home") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
 		final List<String> results = new ArrayList<>();
 		final Optional<File[]> files = Optional.ofNullable(new File(path).listFiles());
-		// version for forbidden
-		/*for (File file : files.get()) {
-				results.add(file.getName());
-			}
-			*/
 		files.ifPresent(files1 -> Arrays.stream(files1).forEach(f -> {
-			results.add(f.getName());
+			results.add(f.getName().replaceAll("\\D", ""));
 		}));
 		return results;
 	}
