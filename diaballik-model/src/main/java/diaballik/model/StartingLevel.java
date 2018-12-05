@@ -9,7 +9,6 @@ public class StartingLevel implements Level {
 
 	@Override
 	public Action chooseAction(final Board board) {
-		//TODO : regler complexité cyclomatique
 		final ArrayList<Piece> blackPieces = new ArrayList<>();
 		board.getPieces().stream().filter(p -> p.getColor() == Color.BLACK && !p.equals(board.getCurrentBlackHolder())).forEach(blackPieces::add);
 		final Piece blackHolder = board.getCurrentBlackHolder();
