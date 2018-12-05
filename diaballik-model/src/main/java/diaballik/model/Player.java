@@ -1,6 +1,11 @@
 package diaballik.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import java.util.Objects;
 
@@ -33,14 +38,14 @@ public abstract class Player {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) {
 			return true;
 		}
 		if (!(o instanceof Player)) {
 			return false;
 		}
-		Player player = (Player) o;
+		final Player player = (Player) o;
 		return Objects.equals(getName(), player.getName()) &&
 				getColor() == player.getColor();
 	}
