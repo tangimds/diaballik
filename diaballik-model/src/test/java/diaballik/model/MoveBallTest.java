@@ -51,14 +51,14 @@ class MoveBallTest {
 
 	@Test
 	void testSetStartingPiece() {
-		MoveBall mb = new MoveBall(null, null);
+		final MoveBall mb = new MoveBall(null, null);
 		mb.setStartingPiece(board.getCurrentBlackHolder());
 		assertTrue(mb.getStartingPiece() != null);
 	}
 
 	@Test
 	void testSetEndingPiece() {
-		MoveBall mb = new MoveBall(null, null);
+		final MoveBall mb = new MoveBall(null, null);
 		mb.setEndingPiece(board.getCurrentBlackHolder());
 		assertTrue(mb.getEndingPiece() != null);
 	}

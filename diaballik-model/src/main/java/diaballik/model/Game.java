@@ -12,8 +12,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.Arrays;
+import java.util.Objects;
+
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -161,7 +163,7 @@ public class Game {
 		final Action a = actions.get(nbActions - 1);
 		System.out.println("a : " + a);
 		a.undo(board);
-		this.winner="NONE";
+		this.winner = "NONE";
 		nbActions--;
 		if (nbActions % 3 == 0) {
 			nbTurn--;
@@ -184,12 +186,15 @@ public class Game {
 	public List<String> getSavedGames() {
 		final String path = System.getProperty("user.home") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
 		final List<String> results = new ArrayList<>();
-		Optional<File[]> files = Optional.ofNullable(new File(path).listFiles());
-		if (files.isPresent()) {
-			for (File file : files.get()) {
+		final Optional<File[]> files = Optional.ofNullable(new File(path).listFiles());
+		// version for forbidden
+		/*for (File file : files.get()) {
 				results.add(file.getName());
 			}
-		}
+			*/
+		files.ifPresent(files1 -> Arrays.stream(files1).forEach(f -> {
+			results.add(f.getName());
+		}));
 		return results;
 	}
 

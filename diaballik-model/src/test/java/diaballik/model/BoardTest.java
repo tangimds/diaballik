@@ -42,7 +42,7 @@ class BoardTest {
 		ArrayList<Piece> p = new ArrayList<>();
 		p.add(new Piece(Color.WHITE,1,2));
 		newboard.setPieces(p);
-		assertFalse(board.getPieces().isEmpty());
+		assertFalse(newboard.getPieces().isEmpty());
 	}
 
 	@Test

@@ -20,9 +20,13 @@ public class MoveBall implements Action {
 		endingPiece = p;
 	}
 
-	public Piece getStartingPiece() { return startingPiece; }
+	public Piece getStartingPiece() {
+		return startingPiece;
+	}
 
-	public Piece getEndingPiece() { return endingPiece; }
+	public Piece getEndingPiece() {
+		return endingPiece;
+	}
 
 
 	@Override
