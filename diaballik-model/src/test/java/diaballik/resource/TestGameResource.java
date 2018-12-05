@@ -22,7 +22,7 @@ public class TestGameResource {
     JerseyExtension jerseyExtension = new JerseyExtension(this::configureJersey);
 
     private Application configureJersey() {
-        return new ResourceConfig(). //
+        return new ResourceConfig().
                 register(GameResource.class).
                 register(MyExceptionMapper.class).
                 register(JacksonFeature.class).

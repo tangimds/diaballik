@@ -145,7 +145,7 @@ public class GameResource {
 	@PUT
 	@Path("movePiece/{x1}/{y1}/{x2}/{y2}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game movePiece(@PathParam("x1") final String x1,
+	public Response movePiece(@PathParam("x1") final String x1,
 						  @PathParam("y1") final String y1,
 						  @PathParam("x2") final String x2,
 						  @PathParam("y2") final String y2) {
@@ -153,18 +153,18 @@ public class GameResource {
 			final Board board = game.get().getBoard();
 			final Piece p = board.getPiece(Integer.parseInt(x1), Integer.parseInt(y1));
 			final Action movePiece = new MovePiece(p, Integer.parseInt(x2), Integer.parseInt(y2));
-			if(movePiece.verifyAction(board)) {
-				movePiece.execute(board);
-				return game.get();
+			if(this.game.get().play(movePiece)) {
+				return Response.ok(this.game.get()).build();
 			}
+			return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Coup non autorisé\"}").build();
 		}
-		return null;
+		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 
 	@PUT
 	@Path("moveBall/{x1}/{y1}/{x2}/{y2}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game moveBall(@PathParam("x1") final String x1,
+	public Response moveBall(@PathParam("x1") final String x1,
 						 @PathParam("y1") final String y1,
 						 @PathParam("x2") final String x2,
 						 @PathParam("y2") final String y2) {
@@ -173,22 +173,24 @@ public class GameResource {
 			final Piece startingP = board.getPiece(Integer.parseInt(x1), Integer.parseInt(y1));
 			final Piece endingP = board.getPiece(Integer.parseInt(x2), Integer.parseInt(y2));
 			final Action moveBall = new MoveBall(startingP, endingP);
-			if(moveBall.verifyAction(board)) {
-				moveBall.execute(board);
-				return game.get();
+			if(this.game.get().play(moveBall)) {
+				return Response.ok(this.game.get()).build();
 			}
+			return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Coup non autorisé\"}").build();
 		}
-		return null;
+		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 
 	@GET
 	@Path("IAPlay")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game iaPlay() {
+	public Response iaPlay() {
 		if(game.isPresent()) {
-			game.get().play();
-			return game.get();
+			if(game.get().play()) {
+				return Response.ok(this.game.get()).build();
+			}
+			return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Coup non autorisé\"}").build();
 		}
-		return null;
+		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 }
