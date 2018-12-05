@@ -143,24 +143,24 @@ public class Test {
 
 	public void testNoobLevel() {
 		final GameBuilder builder = new PvCGameBuilder();
-		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.NOOB.getValue());
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.NOOB);
 		System.out.println(game.getBoard().toStringColor());
 
 		IntStream.rangeClosed(0, 50).forEach(i -> {
 			System.out.println("----------------");
-			game.playAI(game.getBoard());
+			game.playAI();
 			System.out.println(game.getBoard().toStringColor());
 		});
 	}
 
 	public void testStartingLevel() {
 		final GameBuilder builder = new PvCGameBuilder();
-		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.STARTING.getValue());
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.STARTING);
 		System.out.println(game.getBoard().toStringColor());
 
 		IntStream.rangeClosed(0, 200).forEach(i -> {
 			System.out.println("----------------"+i);
-			game.playAI(game.getBoard());
+			game.playAI();
 			System.out.println(game.getBoard().toStringColor());
 		});
 	}
@@ -168,12 +168,12 @@ public class Test {
 
 	public void testProgressiveLevel() {
 		final GameBuilder builder = new PvCGameBuilder();
-		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.PROGRESSIVE.getValue());
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.PROGRESSIVE);
 		System.out.println(game.getBoard().toStringColor());
 
 		IntStream.rangeClosed(0, 50).forEach(i -> {
 			System.out.println("----------------");
-			game.playAI(game.getBoard());
+			game.playAI();
 			System.out.println(game.getBoard().toStringColor());
 		});
 	}

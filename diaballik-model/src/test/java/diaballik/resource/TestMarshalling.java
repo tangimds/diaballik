@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestMarshalling {
     static Stream<Object> getInstancesToMarshall() {
 		final GameBuilder gameBuilder = new PvCGameBuilder();
-		final Game game = gameBuilder.buildGame("Taha", "Glados", Scenario.STANDARD.getValue(), Difficulty.NOOB.getValue());
+		final Game game = gameBuilder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.NOOB);
 
 		//Difficulty diff = Difficulty.NOOB;
 

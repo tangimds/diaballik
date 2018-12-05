@@ -3,7 +3,12 @@ package diaballik.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import diaballik.serialization.DiabalikJacksonProvider;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -11,7 +16,7 @@ public class Game {
 
 	private int nbTurn;
 	private Scenario scenario;
-	//private int id;
+	private long id;
 	private ArrayList<Action> actions;
 	private Board board;
 	private Player p1;
@@ -26,6 +31,7 @@ public class Game {
 		this.scenario = scenario;
 		this.nbTurn = 0;
 		this.actions = new ArrayList<>();
+		this.id = System.currentTimeMillis();
 
 		switch (scenario) {
 			case STANDARD:
@@ -96,8 +102,14 @@ public class Game {
 		return null;
 	}
 
-	public void save() {
-
+	public void save() throws IOException {
+		final ObjectMapper mapper = new DiabalikJacksonProvider().getMapper();
+		final String serializedObject = mapper.writeValueAsString(this);
+		final String path = System.getProperty("user.dir") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
+		new File(path).mkdir();
+		try (PrintWriter out = new PrintWriter(	path + "game_"+this.id+".txt")) {
+			out.println(serializedObject);
+		}
 	}
 
 	@Override

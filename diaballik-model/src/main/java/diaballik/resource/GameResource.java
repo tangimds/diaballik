@@ -1,6 +1,6 @@
 package diaballik.resource;
 
-import diaballik.model.Game;
+import diaballik.model.*;
 import io.swagger.annotations.Api;
 
 import javax.inject.Singleton;
@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 import java.util.Optional;
 
 @Singleton
@@ -38,12 +39,15 @@ public class GameResource {
 	}
 
 	@PUT
-	@Path("newGamePVC/{name}/{scenario}/{level}")
+	@Path("newGamePVC/{name}/{scenario}/{difficulty}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game newGamePVC(@PathParam("name") final String name,
 						   @PathParam("scenario") final String scenario,
-						   @PathParam("level") final String level) {
-		return null;
+						   @PathParam("difficulty") final String difficulty) {
+		final GameBuilder builder = new PvCGameBuilder();
+		final Game game = builder.buildGame(name, null, Scenario.valueOf(scenario), Difficulty.valueOf(difficulty));
+		this.game = Optional.of(game);
+		return game;
 	}
 
 	@PUT
@@ -76,6 +80,13 @@ public class GameResource {
 	@Path("/save/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game save() {
+		game.ifPresent(g -> {
+			try {
+				g.save();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 		return null;
 	}
 
