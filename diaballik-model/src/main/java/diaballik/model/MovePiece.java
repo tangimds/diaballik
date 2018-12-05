@@ -1,15 +1,21 @@
 package diaballik.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 public class MovePiece implements Action {
 
 	private int dx;
 	private int dy;
 	private Piece piece;
 
-	public MovePiece(final Piece piece, final int x, final int y) {
+	@JsonCreator
+	public MovePiece(@JsonProperty("piece") final Piece piece, @JsonProperty("x") final int x, @JsonProperty("y") final int y) {
 		this.piece = piece;
 		dx = x - piece.getX();
 		dy = y - piece.getY();
