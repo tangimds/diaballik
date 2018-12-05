@@ -116,19 +116,23 @@ public class Game {
 	}
 
 	public void nextAction() {
-		//TODO : maj nbTurn
 		final Action a = actions.get(nbActions);
 		System.out.println("a : " + a);
 		a.redo(board);
 		nbActions++;
+		if (nbActions % 3 == 0) {
+			nbTurn++;
+		}
 	}
 
 	public void previousAction() {
-		//TODO : maj nbTurn
 		final Action a = actions.get(nbActions - 1);
 		System.out.println("a : " + a);
 		a.undo(board);
 		nbActions--;
+		if (nbActions % 3 == 0) {
+			nbTurn--;
+		}
 	}
 
 	public void save() throws IOException {
