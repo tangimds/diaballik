@@ -83,6 +83,7 @@ public class GameResource {
 	@Path("/quit/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game quit() {
+		this.game = Optional.empty();
 		return null;
 	}
 
