@@ -14,7 +14,6 @@ class MoveBallTest {
 	private ArrayList<Piece> whitePieces = new ArrayList<>();
 	private ArrayList<Piece> blackPieces = new ArrayList<>();
 	private Board board = new Board();
-	private int i = 5;
 
 	@BeforeEach
 	void setUp() {
@@ -165,12 +164,33 @@ class MoveBallTest {
 
 	@Test
 	void testRedo() {
-		//TODO : testRedo
+		final GameBuilder builder = new PvCGameBuilder();
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.STARTING);
+		game.play(new MoveBall(game.getBoard().getCurrentWhiteHolder(), game.getBoard().getPiece(2,1)));
+		game.play(new MoveBall(game.getBoard().getCurrentWhiteHolder(), game.getBoard().getPiece(7,1)));
+
+		final Board oldBoard = game.getBoard().copy();
+
+		//annule la derniere action
+		game.previousAction();
+		assertNotEquals(oldBoard,game.getBoard(),"old et nouveau board ne sont differents");
+		//refait l'action
+		game.nextAction();
+		assertEquals(game.getBoard(),oldBoard,"testRedo");
 	}
 
 	@Test
 	void testUndo() {
-		//TODO : testUndo
+		final GameBuilder builder = new PvCGameBuilder();
+		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.STARTING);
+		game.play(new MoveBall(game.getBoard().getCurrentWhiteHolder(), game.getBoard().getPiece(2,1)));
+		final Board oldBoard = game.getBoard().copy();
+		game.play(new MoveBall(game.getBoard().getCurrentWhiteHolder(), game.getBoard().getPiece(7,1)));
+
+		//annule la derniere action
+		game.previousAction();
+
+		assertEquals(game.getBoard(),oldBoard,"testUndo");
 	}
 
 }
