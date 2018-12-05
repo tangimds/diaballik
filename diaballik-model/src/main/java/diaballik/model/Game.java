@@ -84,8 +84,8 @@ public class Game {
 		p1.play(b);
 	}
 
-	public void playAI(final Board b) {
-		p2.play(b).execute(b);
+	public void playAI() {
+		p2.play(board).execute(board);
 	}
 
 	public Board nextAction(final int numAction) {

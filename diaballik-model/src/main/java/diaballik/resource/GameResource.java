@@ -98,24 +98,52 @@ public class GameResource {
 
 	//Requêtes de déplacement
 	@PUT
-	@Path("movePiece/{color}/{x1}/{y1}/{x2}/{y2}")
+	@Path("movePiece/{x1}/{y1}/{x2}/{y2}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game movePiece(@PathParam("color") final String color,
-						  @PathParam("x1") final String x1,
+	public Game movePiece(@PathParam("x1") final String x1,
 						  @PathParam("y1") final String y1,
 						  @PathParam("x2") final String x2,
 						  @PathParam("y2") final String y2) {
+		if(game.isPresent()){
+			final Board board = game.get().getBoard();
+			final Piece p = board.getPiece(Integer.valueOf(x1), Integer.valueOf(y1));
+			final Action movePiece = new MovePiece(p, Integer.valueOf(x2), Integer.valueOf(y2));
+			if(movePiece.verifyAction(board)) {
+				movePiece.execute(board);
+				return game.get();
+			}
+		}
 		return null;
 	}
 
 	@PUT
-	@Path("moveBall/{color}/{x1}/{y1}/{x2}/{y2}")
+	@Path("moveBall/{x1}/{y1}/{x2}/{y2}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game moveBall(@PathParam("color") final String color,
-						 @PathParam("x1") final String x1,
+	public Game moveBall(@PathParam("x1") final String x1,
 						 @PathParam("y1") final String y1,
 						 @PathParam("x2") final String x2,
 						 @PathParam("y2") final String y2) {
+		if(game.isPresent()){
+			final Board board = game.get().getBoard();
+			final Piece startingP = board.getPiece(Integer.valueOf(x1), Integer.valueOf(y1));
+			final Piece endingP = board.getPiece(Integer.valueOf(x2), Integer.valueOf(y2));
+			final Action moveBall = new MoveBall(startingP, endingP);
+			if(moveBall.verifyAction(board)) {
+				moveBall.execute(board);
+				return game.get();
+			}
+		}
+		return null;
+	}
+
+	@GET
+	@Path("IAPlay")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Game iaPlay() {
+		if(game.isPresent()){
+			game.get().playAI();
+			return game.get();
+		}
 		return null;
 	}
 }
