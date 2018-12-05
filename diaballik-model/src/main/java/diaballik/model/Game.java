@@ -21,8 +21,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Game {
 
-	//TODO : si game won ne plus faire d'action
-	// TODO verifier si win dans les play
 	private int nbTurn;
 	private int nbActions;
 	private Scenario scenario;
@@ -83,6 +81,14 @@ public class Game {
 	@JsonIgnore
 	public int getTurn() {
 		return nbTurn;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public String getWinner() {
+		return winner;
 	}
 
 	@JsonIgnore

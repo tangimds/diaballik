@@ -85,10 +85,6 @@ class BoardTest {
 	void testHashCode() {
 	}
 
-
-
-	//TODO : Faire tous les tests
-
 	@Test
 	void testAddPiece() {
 		Board board = new Board();

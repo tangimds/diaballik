@@ -53,7 +53,7 @@ public class Board {
 		final Optional<Piece> pieceRes = pieces.stream()
 				.filter(p -> p.getY() == y && p.getX() == x)
 				.findFirst();
-		return pieceRes.get();
+		return pieceRes.orElse(null);
 	}
 
 	public Piece getBall(final Color color) {
