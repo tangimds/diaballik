@@ -67,7 +67,7 @@ public class Board {
 	}
 
 	//unused
-	public Optional<Piece> movePiece(final Piece p, final int x, final int y) {
+	/*public Optional<Piece> movePiece(final Piece p, final int x, final int y) {
 		final Optional<Piece> pieceRes = pieces.stream()
 				.filter(pTemp -> pTemp.getX() == p.getX() && pTemp.getY() == p.getY())
 				.findFirst();
@@ -84,7 +84,7 @@ public class Board {
 			currentBlackHolder = p;
 		}
 		return p;
-	}
+	}*/
 
 	public Optional<Color> win() {
 		if (currentBlackHolder.getY() == 1) {
