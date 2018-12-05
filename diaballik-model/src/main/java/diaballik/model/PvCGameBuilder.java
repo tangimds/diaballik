@@ -13,7 +13,7 @@ public class PvCGameBuilder extends GameBuilder {
 	}
 
 	@Override
-	public Game buildGame(final int gameId) {
+	public Game buildGame(final String gameId) {
 		//TODO
 		return null;
 	}
