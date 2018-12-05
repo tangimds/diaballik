@@ -151,13 +151,14 @@ public class Game {
 		}
 	}
 
-	public List<String> getSavedGames() {
+	@JsonIgnore
+	public static List<String> getSavedGames() {
 		final String path = System.getProperty("user.home") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
 		final List<String> results = new ArrayList<>();
 		Optional<File[]> files = Optional.ofNullable(new File(path).listFiles());
 		if (files.isPresent()) {
 			for (File file : files.get()) {
-				results.add(file.getName());
+				results.add(file.getName().replaceAll("\\D", ""));
 			}
 		}
 		return results;
