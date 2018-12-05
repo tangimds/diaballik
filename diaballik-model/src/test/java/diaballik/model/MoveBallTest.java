@@ -49,7 +49,9 @@ class MoveBallTest {
 		bh.ifPresent(board::setCurrentBlackHolder);
 	}
 
+	/*
 	@Test
+
 	void testSetStartingPiece() {
 		final MoveBall mb = new MoveBall(null, null);
 		mb.setStartingPiece(board.getCurrentBlackHolder());
@@ -62,6 +64,7 @@ class MoveBallTest {
 		mb.setEndingPiece(board.getCurrentBlackHolder());
 		assertTrue(mb.getEndingPiece() != null);
 	}
+	*/
 
 	@Test
 	void testVerifyAction() {
