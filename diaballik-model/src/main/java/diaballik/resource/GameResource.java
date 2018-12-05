@@ -1,8 +1,5 @@
 package diaballik.resource;
 
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import diaballik.model.Game;
 import diaballik.model.Board;
 import diaballik.model.Piece;
@@ -15,9 +12,7 @@ import diaballik.model.PvCGameBuilder;
 import diaballik.model.Scenario;
 import diaballik.model.MovePiece;
 import diaballik.model.MoveBall;
-import diaballik.serialization.DiabalikJacksonProvider;
 import io.swagger.annotations.Api;
-
 import javax.inject.Singleton;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
@@ -28,7 +23,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.Console;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -138,7 +132,7 @@ public class GameResource {
 	@GET
 	@Path("/replay/undo")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Game undo() {
+	public Response undo() {
 		if(this.game.isPresent()) {
 			if(this.game.get().previousAction()) {
 				return Response.ok(this.game.get()).build();
