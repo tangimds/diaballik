@@ -192,7 +192,7 @@ public class GameResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game iaPlay() {
 		if(game.isPresent()) {
-			game.get().play(null);
+			game.get().play();
 			return game.get();
 		}
 		return null;

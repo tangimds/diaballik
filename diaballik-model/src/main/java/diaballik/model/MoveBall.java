@@ -20,6 +20,15 @@ public class MoveBall implements Action {
 		endingPiece = p;
 	}
 
+	public Piece getStartingPiece() {
+		return startingPiece;
+	}
+
+	public Piece getEndingPiece() {
+		return endingPiece;
+	}
+
+
 	@Override
 	public void execute(final Board board) {
 		if (startingPiece.getColor() == Color.WHITE) {

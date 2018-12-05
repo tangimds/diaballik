@@ -11,6 +11,8 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoveBallTest {
+
+
 	private ArrayList<Piece> whitePieces = new ArrayList<>();
 	private ArrayList<Piece> blackPieces = new ArrayList<>();
 	private Board board = new Board();
@@ -47,6 +49,35 @@ class MoveBallTest {
 		bh.ifPresent(board::setCurrentBlackHolder);
 	}
 
+	/*
+	@Test
+
+	void testSetStartingPiece() {
+		final MoveBall mb = new MoveBall(null, null);
+		mb.setStartingPiece(board.getCurrentBlackHolder());
+		assertTrue(mb.getStartingPiece() != null);
+	}
+
+	@Test
+	void testSetEndingPiece() {
+		final MoveBall mb = new MoveBall(null, null);
+		mb.setEndingPiece(board.getCurrentBlackHolder());
+		assertTrue(mb.getEndingPiece() != null);
+	}
+	*/
+
+	@Test
+	void testVerifyAction() {
+	}
+
+	@Test
+	void testEquals() {
+	}
+
+	@Test
+	void testHashCode() {
+	}
+
 	@Test
 	void testExecute() {
 		Optional<Piece> dest = blackPieces.stream()
@@ -57,7 +88,8 @@ class MoveBallTest {
 		dest.ifPresent(mb::setEndingPiece);
 		if (mb.verifyAction(board))
 			mb.execute(board);
-		dest.ifPresent(piece -> assertTrue(board.getCurrentBlackHolder().equals(piece)));
+		//dest.ifPresent(piece -> assertTrue(board.getCurrentBlackHolder().equals(piece)));
+		assertTrue(board.getCurrentBlackHolder().equals(dest.get()));
 	}
 
 	@Test

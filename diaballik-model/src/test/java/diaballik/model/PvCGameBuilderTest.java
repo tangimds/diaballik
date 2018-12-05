@@ -20,7 +20,6 @@ class PvCGameBuilderTest {
 		Game g1 = new Game(p1,p2, Scenario.STANDARD);
 
 		assertEquals(g,g1,"builder");
-
 	}
 
 }

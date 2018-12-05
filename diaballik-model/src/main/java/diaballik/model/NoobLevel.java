@@ -12,7 +12,7 @@ public class NoobLevel implements Level {
 		return pickAction(board);
 	}
 
-	private Action pickAction(final Board board) {
+	public Action pickAction(final Board board) {
 		final ArrayList<Piece> blackPieces = new ArrayList<>();
 		board.getPieces().stream().filter(p -> p.getColor() == Color.BLACK && !p.equals(board.getCurrentBlackHolder())).forEach(blackPieces::add);
 		final Piece blackHolder = board.getCurrentBlackHolder();
@@ -44,5 +44,7 @@ public class NoobLevel implements Level {
 		}
 		return a.get();
 	}
+
+
 
 }

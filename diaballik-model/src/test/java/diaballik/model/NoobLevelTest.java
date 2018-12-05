@@ -13,7 +13,7 @@ class NoobLevelTest {
 		final StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
 		board = standardBoardBuilder.buildBoard();
 		final NoobLevel nb = new NoobLevel();
-		assertTrue(nb.chooseAction(board).verifyAction(board));
+		assertTrue(nb.pickAction(board).verifyAction(board));
 	}
 
 	@Test
@@ -21,7 +21,7 @@ class NoobLevelTest {
 		final StandardBoardBuilder standardBoardBuilder = new StandardBoardBuilder();
 		board = standardBoardBuilder.buildBoard();
 		final NoobLevel nb = new NoobLevel();
-		assertTrue(nb.chooseAction(board) != null);
+		assertTrue(nb.pickAction(board) != null);
 	}
 
 
