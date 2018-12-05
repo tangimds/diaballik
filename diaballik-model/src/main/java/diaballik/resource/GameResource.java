@@ -48,6 +48,9 @@ public class GameResource {
 	@Path("loadGame/{idGame}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game loadGame(@PathParam("idGame") final String idGame) {
+		final GameBuilder builder = new SavedGameBuilder();
+		final Game game = builder.buildGame(idGame);
+		this.game = Optional.of(game);
 		return null;
 	}
 
