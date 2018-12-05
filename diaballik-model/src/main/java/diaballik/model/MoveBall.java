@@ -27,7 +27,6 @@ public class MoveBall implements Action {
 		} else {
 			board.setCurrentBlackHolder(endingPiece);
 		}
-		System.out.println(board.toStringColor());
 	}
 
 	@Override

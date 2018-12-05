@@ -1,6 +1,18 @@
 package diaballik.resource;
 
-import diaballik.model.*;
+
+import diaballik.model.Game;
+import diaballik.model.Board;
+import diaballik.model.Piece;
+import diaballik.model.Action;
+import diaballik.model.Difficulty;
+import diaballik.model.GameBuilder;
+import diaballik.model.PvPGameBuilder;
+import diaballik.model.SavedGameBuilder;
+import diaballik.model.PvCGameBuilder;
+import diaballik.model.Scenario;
+import diaballik.model.MovePiece;
+import diaballik.model.MoveBall;
 import io.swagger.annotations.Api;
 
 import javax.inject.Singleton;
@@ -121,7 +133,7 @@ public class GameResource {
 						  @PathParam("y1") final String y1,
 						  @PathParam("x2") final String x2,
 						  @PathParam("y2") final String y2) {
-		if(game.isPresent()){
+		if(game.isPresent()) {
 			final Board board = game.get().getBoard();
 			final Piece p = board.getPiece(Integer.valueOf(x1), Integer.valueOf(y1));
 			final Action movePiece = new MovePiece(p, Integer.valueOf(x2), Integer.valueOf(y2));
@@ -140,7 +152,7 @@ public class GameResource {
 						 @PathParam("y1") final String y1,
 						 @PathParam("x2") final String x2,
 						 @PathParam("y2") final String y2) {
-		if(game.isPresent()){
+		if(game.isPresent()) {
 			final Board board = game.get().getBoard();
 			final Piece startingP = board.getPiece(Integer.valueOf(x1), Integer.valueOf(y1));
 			final Piece endingP = board.getPiece(Integer.valueOf(x2), Integer.valueOf(y2));
@@ -157,7 +169,7 @@ public class GameResource {
 	@Path("IAPlay")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Game iaPlay() {
-		if(game.isPresent()){
+		if(game.isPresent()) {
 			game.get().play(null);
 			return game.get();
 		}

@@ -159,7 +159,7 @@ public class Test {
 		System.out.println(game.getBoard().toStringColor());
 
 		IntStream.rangeClosed(0, 200).forEach(i -> {
-			System.out.println("----------------"+i);
+			System.out.println("----------------" + i);
 			game.play(null);
 			System.out.println(game.getBoard().toStringColor());
 		});
@@ -183,9 +183,9 @@ public class Test {
 		final Game game = builder.buildGame("Taha", "Glados", Scenario.STANDARD, Difficulty.STARTING);
 		IntStream.rangeClosed(0, 5).forEach(i -> {
 			System.out.println("\n\n------- coup " + i + " -------");
-			if(game.getTurn()%2 ==0) {
-				Optional<Piece> pieceOptional = game.getBoard().getPieces().stream()
-						.filter(p->p.getX()==game.getBoard().getCurrentWhiteHolder().getX()+1 && p.getY()==game.getBoard().getCurrentWhiteHolder().getY())
+			if (game.getTurn() % 2 == 0) {
+				final Optional<Piece> pieceOptional = game.getBoard().getPieces().stream()
+						.filter(p -> p.getX() == game.getBoard().getCurrentWhiteHolder().getX() + 1 && p.getY() == game.getBoard().getCurrentWhiteHolder().getY())
 						.findFirst();
 				game.play(new MoveBall(game.getBoard().getCurrentWhiteHolder(), pieceOptional.get()));
 			} else {
@@ -209,9 +209,6 @@ public class Test {
 
 		game.nextAction();
 		System.out.println(game.toString());
-
-		System.out.println(game.toString());
-
 	}
 
 	public static void main(final String[] args) {

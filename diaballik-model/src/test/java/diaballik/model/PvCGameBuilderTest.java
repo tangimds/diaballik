@@ -13,7 +13,7 @@ class PvCGameBuilderTest {
 	@Test
 	void testBuildGame1() {
 		PvCGameBuilder pvc = new PvCGameBuilder();
-		Game g = pvc.buildGame("humain","ordi", Scenario.STANDARD.getValue(), Difficulty.NOOB.getValue());
+		Game g = pvc.buildGame("humain","ordi", Scenario.STANDARD, Difficulty.NOOB);
 
 		Player p1 = new HumanPlayer("humain",Color.WHITE);
 		Player p2 = new AIPlayer("ordi", Color.BLACK, Difficulty.NOOB);

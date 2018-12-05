@@ -34,7 +34,6 @@ public class MovePiece implements Action {
 			final Piece p = optPiece.get();
 			p.setPosition(p.getX() + dx, p.getY() + dy);
 		}
-		System.out.println(board.toStringColor());
 	}
 
 	@Override
@@ -59,14 +58,6 @@ public class MovePiece implements Action {
 
 	@Override
 	public boolean verifyAction(final Board b) {
-		final boolean moveAuthorized = Math.abs(dx) <= 1 // decale pas plus de 1 case
-				&& Math.abs(dy) <= 1
-				&& (Math.abs(dx) + Math.abs(dy) <= 1) // uniquement horizontale/veticale
-				&& piece.getX() + dx <= 7
-				&& piece.getX() + dx >= 1
-				&& piece.getY() + dy <= 7
-				&& piece.getY() + dy >= 1;
-
 		final boolean caseOccupied = b.getPieces().stream()
 				.anyMatch(p -> p.getX() == piece.getX() + dx
 						&& p.getY() == piece.getY() + dy);
@@ -75,7 +66,17 @@ public class MovePiece implements Action {
 				|| piece.equals(b.getCurrentWhiteHolder());
 
 
-		return moveAuthorized && !caseOccupied && !isHolder;
+		return verifyMoveAuthorized() && !caseOccupied && !isHolder;
+	}
+
+	public boolean verifyMoveAuthorized() {
+		return Math.abs(dx) <= 1 // decale pas plus de 1 case
+				&& Math.abs(dy) <= 1
+				&& (Math.abs(dx) + Math.abs(dy) <= 1) // uniquement horizontale/veticale
+				&& piece.getX() + dx <= 7
+				&& piece.getX() + dx >= 1
+				&& piece.getY() + dy <= 7
+				&& piece.getY() + dy >= 1;
 	}
 
 	@Override

@@ -136,7 +136,8 @@ public class Game {
 		final String serializedObject = mapper.writeValueAsString(this);
 		final String path = System.getProperty("user.dir") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
 		new File(path).mkdir();
-		try (PrintWriter out = new PrintWriter(	path + "game_"+this.id+".txt")) {
+		//TODO : new PrintWriter(	path + "game_"+this.id+".txt", UTF_8.name()))
+		try (PrintWriter out = new PrintWriter(path + "game_" + this.id + ".txt")) {
 			out.println(serializedObject);
 		}
 	}
