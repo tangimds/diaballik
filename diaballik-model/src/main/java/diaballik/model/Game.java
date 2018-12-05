@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Game {
 
+	//TODO : si game won ne plus faire d'action
+	// TODO verifier si win dans les play
 	private int nbTurn;
 	private int nbActions;
 	private Scenario scenario;
@@ -26,11 +29,13 @@ public class Game {
 	private Board board;
 	private Player p1;
 	private Player p2;
+	private String winner;
 
 	@JsonCreator
 	public Game(@JsonProperty("p1") final Player p1, @JsonProperty("p2") final Player p2, @JsonProperty("scenario") final Scenario scenario) {
 
 		//initialization of the arguments
+		this.winner = "NONE";
 		this.p1 = p1;
 		this.p2 = p2;
 		this.scenario = scenario;
@@ -91,52 +96,77 @@ public class Game {
 		nbTurn = t;
 	}
 
-	public void play(final Action a) {
-		if ((nbTurn & 1) == 0) {
+	public boolean play(final Action a) {
+		if (!a.verifyAction(board)) {
+			return false;
+		}
+		if ((nbTurn & 1) == 0 || (p2 instanceof HumanPlayer)) {
 			actions.add(a);
 			a.execute(board);
 			nbActions++;
 			if (nbActions % 3 == 0) {
 				nbTurn++;
 			}
-		} else if ((nbTurn & 1) != 0) {
-			if (p2 instanceof AIPlayer) {
-				final Action action = p2.play(board);
-				actions.add(action);
-				action.execute(board);
-				nbActions++;
-				if (nbActions % 3 == 0) {
-					nbTurn++;
-				}
-			} else {
-				actions.add(a);
-				a.execute(board);
-				nbActions++;
-				if (nbActions % 3 == 0) {
-					nbTurn++;
-				}
+			if (board.win().isPresent()) {
+				final Locale l = Locale.ENGLISH;
+				this.winner = board.win().get().name().toUpperCase(l);
 			}
+			return true;
+		} else {
+			return false;
 		}
 	}
 
-	public void nextAction() {
+	public boolean play() {
+		if ((nbTurn & 1) != 0 && (p2 instanceof AIPlayer)) {
+			final Action action = p2.play(board);
+			actions.add(action);
+			action.execute(board);
+			nbActions++;
+			if (nbActions % 3 == 0) {
+				nbTurn++;
+			}
+			if (board.win().isPresent()) {
+				final Locale l = Locale.ENGLISH;
+				this.winner = board.win().get().name().toUpperCase(l);
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public boolean nextAction() {
+		if (nbActions == actions.size()) {
+			return false;
+		}
 		final Action a = actions.get(nbActions);
 		System.out.println("a : " + a);
 		a.redo(board);
+		if (board.win().isPresent()) {
+			final Locale l = Locale.ENGLISH;
+			this.winner = board.win().get().name().toUpperCase(l);
+		}
 		nbActions++;
 		if (nbActions % 3 == 0) {
 			nbTurn++;
 		}
+		return true;
 	}
 
-	public void previousAction() {
+	public boolean previousAction() {
+		if (nbActions == 0) {
+			return false;
+		}
 		final Action a = actions.get(nbActions - 1);
 		System.out.println("a : " + a);
 		a.undo(board);
+		this.winner="NONE";
 		nbActions--;
 		if (nbActions % 3 == 0) {
 			nbTurn--;
 		}
+		return true;
 	}
 
 	public void save() throws IOException {
@@ -146,7 +176,7 @@ public class Game {
 		if (new File(path).mkdir()) {
 			System.out.println("Directory created");
 		}
-		try (PrintWriter out = new PrintWriter(path + "game_" + this.id + ".txt",  UTF_8.name())) {
+		try (PrintWriter out = new PrintWriter(path + "game_" + this.id + ".txt", UTF_8.name())) {
 			out.println(serializedObject);
 		}
 	}

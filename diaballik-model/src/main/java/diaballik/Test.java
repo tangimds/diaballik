@@ -148,7 +148,7 @@ public class Test {
 
 		IntStream.rangeClosed(0, 50).forEach(i -> {
 			System.out.println("----------------");
-			game.play(null);
+			game.play();
 			System.out.println(game.getBoard().toStringColor());
 		});
 	}
@@ -160,7 +160,7 @@ public class Test {
 
 		IntStream.rangeClosed(0, 200).forEach(i -> {
 			System.out.println("----------------" + i);
-			game.play(null);
+			game.play();
 			System.out.println(game.getBoard().toStringColor());
 		});
 	}
@@ -173,7 +173,7 @@ public class Test {
 
 		IntStream.rangeClosed(0, 50).forEach(i -> {
 			System.out.println("----------------");
-			game.play(null);
+			game.play();
 			System.out.println(game.getBoard().toStringColor());
 		});
 	}
@@ -189,7 +189,7 @@ public class Test {
 						.findFirst();
 				game.play(new MoveBall(game.getBoard().getCurrentWhiteHolder(), pieceOptional.get()));
 			} else {
-				game.play(null);
+				game.play();
 			}
 			System.out.println(game.toString());
 
