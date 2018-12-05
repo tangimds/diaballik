@@ -31,8 +31,10 @@ public class GameResource {
 	public Game newGamePVP(@PathParam("name1") final String name1,
 						   @PathParam("name2") final String name2,
 						   @PathParam("scenario") final String scenario) {
-
-		return null;
+		final GameBuilder builder = new PvPGameBuilder();
+		final Game game = builder.buildGame(name1, name2, Scenario.valueOf(scenario), null);
+		this.game = Optional.of(game);
+		return game;
 	}
 
 	@PUT
