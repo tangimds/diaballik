@@ -18,19 +18,74 @@ class MovePieceTest {
 	}
 
 	@Test
+	void testGetDx() {
+		Optional<Piece> opt = board.getPieces().stream()
+				.filter(p -> p.getX() == 3 && p.getY() == 1)
+				.findFirst();
+
+		final MovePiece mp = new MovePiece(opt.get(), 4, 1);
+		assertEquals(1,mp.getDx());
+	}
+
+	@Test
+	void testGetDy() {
+		Optional<Piece> opt = board.getPieces().stream()
+				.filter(p -> p.getX() == 3 && p.getY() == 1)
+				.findFirst();
+
+		final MovePiece mp = new MovePiece(opt.get(), 3, 2);
+		assertEquals(1,mp.getDy());
+	}
+
+	@Test
+	void testVerifyMoveAuthorized() {
+		Optional<Piece> opt = board.getPieces().stream()
+				.filter(p -> p.getX() == 3 && p.getY() == 1)
+				.findFirst();
+
+		final MovePiece mp1 = new MovePiece(opt.get(), 3, 2);
+		final MovePiece mp2 = new MovePiece(opt.get(), 4, 2);
+
+		assertTrue(mp1.verifyAction(board));
+		assertFalse(mp2.verifyAction(board));
+
+	}
+
+	@Test
+	void testEquals() {
+		Optional<Piece> opt = board.getPieces().stream()
+				.filter(p -> p.getX() == 3 && p.getY() == 1)
+				.findFirst();
+
+		final MovePiece mp1 = new MovePiece(opt.get(), 3, 2);
+		final MovePiece mp2 = new MovePiece(opt.get(), 3, 2);
+
+		assertEquals(mp1,mp2);
+	}
+
+	@Test
+	void testHashCode() {
+		Optional<Piece> opt = board.getPieces().stream()
+				.filter(p -> p.getX() == 3 && p.getY() == 1)
+				.findFirst();
+
+		final MovePiece mp1 = new MovePiece(opt.get(), 3, 2);
+		final MovePiece mp2 = new MovePiece(opt.get(), 3, 2);
+
+		assertEquals(mp1.hashCode(),mp2.hashCode());
+	}
+
+
+	@Test
 	void testExecute() {
 		Optional<Piece> opt = board.getPieces().stream()
 				.filter(p -> p.getX() == 3 && p.getY() == 1)
 				.findFirst();
 
-		if (opt.isPresent()) {
-			final MovePiece mp = new MovePiece(opt.get(), 3, 2);
-			if (mp.verifyAction(board))
-				mp.execute(board);
-			assertTrue(opt.get().getX() == 3 && opt.get().getY() == 2, "execute");
-		}
-
-
+		final MovePiece mp = new MovePiece(opt.get(), 3, 2);
+		if (mp.verifyAction(board))
+			mp.execute(board);
+		assertTrue(opt.get().getX() == 3 && opt.get().getY() == 2, "execute");
 	}
 
 	@Test

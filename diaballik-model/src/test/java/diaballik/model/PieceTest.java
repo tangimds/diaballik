@@ -32,4 +32,11 @@ class PieceTest {
 		assertFalse(p2.isBetween(p1, p3));
 	}
 
+	@Test
+	void testHashCode() {
+		final Piece p1 = new Piece(Color.WHITE,1,1);
+		final Piece p2 = new Piece(Color.WHITE,1,1);
+		assertEquals(p1.hashCode(),p2.hashCode());
+	}
+
 }
