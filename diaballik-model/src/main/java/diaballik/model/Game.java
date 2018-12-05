@@ -10,7 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -147,6 +149,18 @@ public class Game {
 		try (PrintWriter out = new PrintWriter(path + "game_" + this.id + ".txt",  UTF_8.name())) {
 			out.println(serializedObject);
 		}
+	}
+
+	public List<String> getSavedGames() {
+		final String path = System.getProperty("user.home") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
+		final List<String> results = new ArrayList<>();
+		Optional<File[]> files = Optional.ofNullable(new File(path).listFiles());
+		if (files.isPresent()) {
+			for (File file : files.get()) {
+				results.add(file.getName());
+			}
+		}
+		return results;
 	}
 
 	@Override
