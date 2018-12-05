@@ -66,6 +66,7 @@ public class Board {
 		return p;
 	}
 
+	//unused
 	public Optional<Piece> movePiece(final Piece p, final int x, final int y) {
 		final Optional<Piece> pieceRes = pieces.stream()
 				.filter(pTemp -> pTemp.getX() == p.getX() && pTemp.getY() == p.getY())
@@ -74,6 +75,7 @@ public class Board {
 		return pieceRes;
 	}
 
+	//unused
 	public Piece moveBall(final Piece p) {
 		final Color color = p.getColor();
 		if (color == Color.WHITE) {
@@ -169,15 +171,25 @@ public class Board {
 		return str[0];
 	}
 
+	public Board copy() {
+		final Board b = new Board();
+		b.setCurrentWhiteHolder(this.getCurrentWhiteHolder());
+		b.setCurrentBlackHolder(this.getCurrentBlackHolder());
+		pieces.forEach(p -> {
+			b.addPiece(p.copy());
+		});
+		return b;
+	}
+
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) {
 			return true;
 		}
 		if (!(o instanceof Board)) {
 			return false;
 		}
-		Board board = (Board) o;
+		final Board board = (Board) o;
 		return Objects.equals(getCurrentWhiteHolder(), board.getCurrentWhiteHolder()) &&
 				Objects.equals(getCurrentBlackHolder(), board.getCurrentBlackHolder()) &&
 				Objects.equals(getPieces(), board.getPieces());

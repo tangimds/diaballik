@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Game {
 
 	private int nbTurn;
+	private int nbActions;
 	private Scenario scenario;
 	//private int id;
 	private ArrayList<Action> actions;
@@ -25,6 +26,7 @@ public class Game {
 		this.p2 = p2;
 		this.scenario = scenario;
 		this.nbTurn = 0;
+		this.nbActions = 0;
 		this.actions = new ArrayList<>();
 
 		switch (scenario) {
@@ -79,36 +81,64 @@ public class Game {
 		nbTurn = t;
 	}
 
-
-	public void playHuman(final Board b) {
-		p1.play(b);
+	public void play(final Action a) {
+		if ((nbTurn & 1) == 0) {
+			actions.add(a);
+			a.execute(board);
+			nbActions++;
+			if (nbActions % 3 == 0) {
+				nbTurn++;
+			}
+		} else if ((nbTurn & 1) != 0) {
+			if (p2 instanceof AIPlayer) {
+				final Action action = p2.play(board);
+				actions.add(action);
+				action.execute(board);
+				nbActions++;
+				if (nbActions % 3 == 0) {
+					nbTurn++;
+				}
+			} else {
+				actions.add(a);
+				a.execute(board);
+				nbActions++;
+				if (nbActions % 3 == 0) {
+					nbTurn++;
+				}
+			}
+		}
 	}
 
-	public void playAI(final Board b) {
-		p2.play(b).execute(b);
+	public void nextAction() {
+		//TODO : maj nbTurn
+		final Action a = actions.get(nbActions);
+		System.out.println("a : " + a);
+		a.redo(board);
+		nbActions++;
 	}
 
-	public Board nextAction(final int numAction) {
-		return null;
-	}
-
-	public Board previousAction(final int numAction) {
-		return null;
+	public void previousAction() {
+		//TODO : maj nbTurn
+		final Action a = actions.get(nbActions - 1);
+		System.out.println("a : " + a);
+		a.undo(board);
+		nbActions--;
 	}
 
 	public void save() {
+		//TODO : save
 
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) {
 			return true;
 		}
 		if (!(o instanceof Game)) {
 			return false;
 		}
-		Game game = (Game) o;
+		final Game game = (Game) o;
 		return nbTurn == game.nbTurn &&
 				//id == game.id &&
 				getScenario() == game.getScenario() &&
@@ -123,5 +153,13 @@ public class Game {
 
 		//return Objects.hash(nbTurn, getScenario(), id, actions, getBoard(), p1, p2);
 		return Objects.hash(nbTurn, getScenario(), actions, getBoard(), p1, p2);
+	}
+
+	@Override
+	public String toString() {
+		return "nbTurn : " + nbTurn + "\n"
+				+ "nbActions : " + nbActions + "\n"
+				+ ">" + actions.toString() + "\n"
+				+ board.toStringColor() + "\n\n";
 	}
 }

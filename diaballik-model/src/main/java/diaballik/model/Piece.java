@@ -62,15 +62,19 @@ public class Piece {
 		return colinear && sameDirection && shorter;
 	}
 
+	public Piece copy() {
+		return new Piece(color, x, y);
+	}
+
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) {
 			return true;
 		}
 		if (!(o instanceof Piece)) {
 			return false;
 		}
-		Piece piece = (Piece) o;
+		final Piece piece = (Piece) o;
 		return getX() == piece.getX() &&
 				getY() == piece.getY() &&
 				getColor() == piece.getColor();
@@ -80,5 +84,10 @@ public class Piece {
 	public int hashCode() {
 
 		return Objects.hash(getColor(), getX(), getY());
+	}
+
+	@Override
+	public String toString() {
+		return "(" + x + "," + y + ")";
 	}
 }

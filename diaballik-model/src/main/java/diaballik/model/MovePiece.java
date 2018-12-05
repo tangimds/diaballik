@@ -29,7 +29,7 @@ public class MovePiece implements Action {
 
 	@Override
 	public void execute(final Board board) {
-		final Optional<Piece> optPiece = board.getPieces().stream().filter(p -> p == piece).findFirst();
+		final Optional<Piece> optPiece = board.getPieces().stream().filter(p -> p.equals(piece)).findFirst();
 		if (optPiece.isPresent()) {
 			final Piece p = optPiece.get();
 			p.setPosition(p.getX() + dx, p.getY() + dy);
@@ -38,12 +38,22 @@ public class MovePiece implements Action {
 
 	@Override
 	public void redo(final Board board) {
-
+		if (this.verifyAction(board)) {
+			this.execute(board);
+		}
 	}
 
 	@Override
 	public void undo(final Board board) {
-
+		System.out.println("undoing MovePiece");
+		final MovePiece mp = new MovePiece(piece, piece.getX() - dx, piece.getY() - dy);
+		System.out.println("VERIFY : " + mp.verifyAction(board));
+		System.out.println("mp" + mp);
+		//System.out.println(board.toStringColor());
+		if (mp.verifyAction(board)) {
+			System.out.println("execute : " + mp);
+			mp.execute(board);
+		}
 	}
 
 	@Override
@@ -65,14 +75,14 @@ public class MovePiece implements Action {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) {
 			return true;
 		}
 		if (!(o instanceof MovePiece)) {
 			return false;
 		}
-		MovePiece movePiece = (MovePiece) o;
+		final MovePiece movePiece = (MovePiece) o;
 		return getDx() == movePiece.getDx() &&
 				getDy() == movePiece.getDy() &&
 				Objects.equals(getPiece(), movePiece.getPiece());
@@ -84,5 +94,9 @@ public class MovePiece implements Action {
 		return Objects.hash(getDx(), getDy(), getPiece());
 	}
 
+	@Override
+	public String toString() {
+		return "Move Piece(" + piece + ") -- dx=" + dx + ",dy=" + dy;
+	}
 }
 
