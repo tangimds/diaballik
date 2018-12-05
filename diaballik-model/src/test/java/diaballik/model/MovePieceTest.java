@@ -51,6 +51,17 @@ class MovePieceTest {
 
 	}
 
+	void testNoMovewithBall() {
+		Optional<Piece> opt = board.getPieces().stream()
+				.filter(p -> p.getX() == 4 && p.getY() == 1)
+				.findFirst();
+
+		final MovePiece mp = new MovePiece(opt.get(), 4, 2);
+
+		assertFalse(mp.verifyAction(board));
+
+	}
+
 	@Test
 	void testEquals() {
 		Optional<Piece> opt = board.getPieces().stream()

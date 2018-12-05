@@ -45,18 +45,29 @@ class GameTest {
 	}
 
 	@Test
-	void testNextAction() {
-		//TODO
+	void testTurnByTurn(){
+		// le joueur essaie de jouer 4 fois
+		game.play(new MoveBall(game.getBoard().getCurrentWhiteHolder(),game.getBoard().getPiece(1,1)));
+		game.play(new MovePiece(game.getBoard().getPiece(7,1),7,2));
+		game.play(new MovePiece(game.getBoard().getPiece(7,2),6,2));
+		assertFalse(game.play(new MovePiece(game.getBoard().getPiece(6,2),6,3)));
+
+
 	}
 
 	@Test
-	void testPreviousAction() {
-		//TODO
+	void testNextAction() {//TODO
+
 	}
 
 	@Test
-	void testSave() {
-		//TODO
+	void testPreviousAction() {//TODO
+
+	}
+
+	@Test
+	void testSave() {//TODO
+
 	}
 
 }
