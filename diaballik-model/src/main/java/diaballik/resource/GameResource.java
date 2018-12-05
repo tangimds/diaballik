@@ -135,8 +135,8 @@ public class GameResource {
 						  @PathParam("y2") final String y2) {
 		if(game.isPresent()) {
 			final Board board = game.get().getBoard();
-			final Piece p = board.getPiece(Integer.valueOf(x1), Integer.valueOf(y1));
-			final Action movePiece = new MovePiece(p, Integer.valueOf(x2), Integer.valueOf(y2));
+			final Piece p = board.getPiece(Integer.parseInt(x1), Integer.parseInt(y1));
+			final Action movePiece = new MovePiece(p, Integer.parseInt(x2), Integer.parseInt(y2));
 			if(movePiece.verifyAction(board)) {
 				movePiece.execute(board);
 				return game.get();
@@ -154,8 +154,8 @@ public class GameResource {
 						 @PathParam("y2") final String y2) {
 		if(game.isPresent()) {
 			final Board board = game.get().getBoard();
-			final Piece startingP = board.getPiece(Integer.valueOf(x1), Integer.valueOf(y1));
-			final Piece endingP = board.getPiece(Integer.valueOf(x2), Integer.valueOf(y2));
+			final Piece startingP = board.getPiece(Integer.parseInt(x1), Integer.parseInt(y1));
+			final Piece endingP = board.getPiece(Integer.parseInt(x2), Integer.parseInt(y2));
 			final Action moveBall = new MoveBall(startingP, endingP);
 			if(moveBall.verifyAction(board)) {
 				moveBall.execute(board);

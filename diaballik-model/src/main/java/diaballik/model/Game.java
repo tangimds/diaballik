@@ -12,6 +12,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 public class Game {
 
 	private int nbTurn;
@@ -135,9 +137,10 @@ public class Game {
 		final ObjectMapper mapper = new DiabalikJacksonProvider().getMapper();
 		final String serializedObject = mapper.writeValueAsString(this);
 		final String path = System.getProperty("user.home") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
-		new File(path).mkdir();
-		//TODO : new PrintWriter(	path + "game_"+this.id+".txt", UTF_8.name()))
-		try (PrintWriter out = new PrintWriter(path + "game_" + this.id + ".txt")) {
+		if (new File(path).mkdir()) {
+			System.out.println("Directory created");
+		}
+		try (PrintWriter out = new PrintWriter(path + "game_" + this.id + ".txt",  UTF_8.name())) {
 			out.println(serializedObject);
 		}
 	}
