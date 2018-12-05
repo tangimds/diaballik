@@ -65,6 +65,6 @@ public class AIPlayer extends Player {
 	@Override
 	public int hashCode() {
 
-		return Objects.hash(super.hashCode(), difficulty, getLevel());
+		return Objects.hash(super.hashCode(), difficulty);
 	}
 }
