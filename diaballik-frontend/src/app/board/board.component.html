@@ -1,3 +1,35 @@
-<p>
-  board works!
-</p>
+<h2 class="player">{{data.storage.p2.name == null ? data.storage.p2.difficulty+" AI" : data.storage.p2.name}}</h2>
+
+<div class='board'
+     oncontextmenu="return false;">
+  <div class='line' #tiles *ngFor="let y of [7,6,5,4,3,2,1]"
+       oncontextmenu="return false;">
+    <div class='tile' #tiles *ngFor="let x of [1,2,3,4,5,6,7]"
+         oncontextmenu="return false;"
+         [attr.data-x]=x
+         [attr.data-y]=y
+    >
+    </div>
+  </div>
+  <div class='piece' #pieces *ngFor="let p of data.storage.board.pieces"
+       [style.left.px]="(p.x-1) * 80"
+       [style.top.px]="((8-p.y)-1) * 80"
+       [style.border]="'12px solid '+p.color"
+  >
+  </div>
+  <div class='ball' #ball
+       [style.left.px]="(data.storage.board.currentBlackHolder.x-1) * 80  "
+       [style.top.px]="((8-data.storage.board.currentBlackHolder.y)-1) * 80"
+       [style.background]="data.storage.board.currentBlackHolder.color"
+  >
+  </div>
+  <div class='ball' #ball
+       [style.left.px]="(data.storage.board.currentWhiteHolder.x-1) * 80  "
+       [style.top.px]="((8-data.storage.board.currentWhiteHolder.y)-1) * 80"
+       [style.background]="data.storage.board.currentWhiteHolder.color"
+  >
+  </div>
+</div>
+
+<h2 class="player">{{data.storage.p1.name}}</h2>
+
