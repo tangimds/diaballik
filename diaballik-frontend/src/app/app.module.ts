@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { BoardComponent } from './board/board.component';
+import { MenuComponent } from './menu/menu.component';
 
 const appRoutes: Routes = [
   { path: '',
@@ -14,7 +16,9 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BoardComponent,
+    MenuComponent
   ],
   imports: [
     RouterModule.forRoot(
