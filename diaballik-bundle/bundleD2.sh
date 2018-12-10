@@ -1,7 +1,7 @@
 #!/bin/sh
 
-name1="prenom-NOM"
-name2="prenom-NOM"
+name1="Taha-YASSINE"
+name2="Tangi-MENDES"
 release="D2"-$name1-$name2
 
 # cleaning the release files
@@ -11,14 +11,14 @@ mkdir $release
 cd ../diaballik-model
 mvn clean package
 cd ..
-zip -r diaballik-bundle/$release/diaballik-D2-$name1-$name2-sources.zip diaballik-doc diaballik-model lib-algo -x diaballik-model/target/\* lib-algo/target/\* \*.idea/\* \*.iml
+zip -r diaballik-bundle/$release/diaballik-D2-$name1-$name2-sources.zip diaballik-doc diaballik-model -x diaballik-model/target/\* \*.idea/\* \*.iml
 
-# building Docker containers
+## building Docker containers
 ## Docker container of the back-end
-cd diaballik-model
-docker build -t diaballik-backend .
-cd ../diaballik-bundle
-docker save diaballik-backend | xz > $release/diaballik-$name1-$name2-backend-docker.tar.xz
+#cd diaballik-model
+#docker build -t diaballik-backend .
+#cd ../diaballik-bundle
+#docker save diaballik-backend | xz > $release/diaballik-$name1-$name2-backend-docker.tar.xz
 
 # docker stop diaballik-backend-run
 # docker rm diaballik-backend-run
