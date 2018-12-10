@@ -9,11 +9,12 @@ export class MyData {
   // The data to store
   // any: https://www.typescriptlang.org/docs/handbook/basic-types.html
   public storage: any;
+  public test: any;
 
   public constructor() {
     // An example of how storage can be used to store json data.
     // The JSON class can both parse JSON from a string, a produce a string from a JSON object (stringify)
-    this.storage  = JSON.parse('{' +
+     /*this.storage  = JSON.parse('{' +
       '"p1":{"type":"HumanPlayer","@id":1,"name":"jean","color":"WHITE"},' +
       // '"p2":{"type":"HumanPlayer","@id":2,"name":"yves","color":"BLACK"},' +
       '"p2":{"type":"AIPlayer","@id":2,"name":null,"color":"BLACK","difficulty":"NOOB"},' +
@@ -35,6 +36,14 @@ export class MyData {
       '{"type":"Piece","color":"BLACK","x":2,"y":7},{"type":"Piece","color":"BLACK","x":3,"y":7},' +
       '{"type":"Piece","color":"BLACK","x":4,"y":7},{"type":"Piece","color":"BLACK","x":5,"y":7},' +
       '{"type":"Piece","color":"BLACK","x":6,"y":7},{"type":"Piece","color":"BLACK","x":7,"y":7}]},' +
-      '"winner":"NONE"}');
+      '"winner":"NONE"}');*/
+  }
+
+  public setTest(d) {
+    this.test = d;
+  }
+
+  public setStorage(data) {
+    this.storage = data;
   }
 }

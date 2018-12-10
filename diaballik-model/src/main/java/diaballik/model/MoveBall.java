@@ -34,6 +34,9 @@ public class MoveBall implements Action {
 		return endingPiece;
 	}
 
+	public Color getColor() {
+		return startingPiece.getColor();
+	}
 
 	@Override
 	public void execute(final Board board) {

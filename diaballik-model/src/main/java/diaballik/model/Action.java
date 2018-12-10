@@ -18,7 +18,7 @@ public interface Action {
 
 	public abstract void undo(Board board);
 
-	public abstract void getColor(); //TODO
+	public abstract Color getColor(); //TODO
 	/*
 	moveBall et MovePiece auront leur propre getColor, qui retournera la couleur des pions liés à la commmande
 	cette couleur pourra alors être vérifiée lors du Game.play(Action a)

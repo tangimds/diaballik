@@ -33,6 +33,10 @@ public class MovePiece implements Action {
 		return piece;
 	}
 
+	public Color getColor() {
+		return piece.getColor();
+	}
+
 	@Override
 	public void execute(final Board board) {
 		final Optional<Piece> optPiece = board.getPieces().stream().filter(p -> p.equals(piece)).findFirst();

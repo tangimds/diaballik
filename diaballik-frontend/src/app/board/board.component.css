@@ -2,7 +2,7 @@ div {
   --size-cell: 80px;
   --border-cell: 5px;
   --nb-cell: 7;
-  --size-ball: 25px;
+  --size-ball: 24px;
   --size-piece: 60px;
 }
 
@@ -45,7 +45,6 @@ div {
 .ball{
   box-sizing: border-box;
   position: absolute;
-  background-color: red;
   width: var(--size-ball);
   height: var(--size-ball);
   border-radius: calc(var(--size-ball)/2);
