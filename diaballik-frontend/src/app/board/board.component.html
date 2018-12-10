@@ -1,4 +1,4 @@
-<h2 (click)="test()" class="player">{{data.storage.p2.name == null ? data.storage.p2.difficulty+" AI" : data.storage.p2.name}}</h2>
+<h2 (click)="playAI()" class="player">{{data.storage.p2.name == null ? data.storage.p2.difficulty+" AI" : data.storage.p2.name}}</h2>
 
 <div class='board'
      oncontextmenu="return false;">
@@ -39,5 +39,5 @@
   </div>
 </div>
 
-<h2 class="player">{{data.storage.p1.name}}</h2>
+<h2 (click)="test()" class="player">{{data.storage.p1.name}}</h2>
 

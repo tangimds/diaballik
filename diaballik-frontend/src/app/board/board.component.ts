@@ -2,7 +2,6 @@ import {Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef} f
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MyData } from '../mydata';
-import {delay} from "q";
 
 @Component({
   selector: 'app-board',
@@ -21,12 +20,6 @@ export class BoardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.http.put(`game/newGamePVC/MENDES/STANDARD/NOOB`, {}, {}).
-    subscribe(returnedData => {
-      console.log('init game : ');
-      console.log(returnedData);
-      this.data.setStorage(returnedData);
-    });
   }
 
   ngAfterViewInit(): void {
@@ -86,6 +79,14 @@ export class BoardComponent implements OnInit, AfterViewInit {
     });
 
     this.http.put(`game/moveBall/4/1/7/1`, {}, {}).
+    subscribe(returnedData => {
+      this.data.setStorage(returnedData);
+      console.log(returnedData);
+    });
+  }
+
+  public playAI() {
+    this.http.get(`game/IAPlay`, {}).
     subscribe(returnedData => {
       this.data.setStorage(returnedData);
       console.log(returnedData);

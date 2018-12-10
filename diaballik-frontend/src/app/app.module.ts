@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -10,8 +11,16 @@ import {MyData} from './mydata';
 
 const appRoutes: Routes = [
   { path: '',
-    redirectTo: '/config',
+    redirectTo: '/menu',
     pathMatch: 'full'
+  },
+  {
+    path: 'menu',
+    component: MenuComponent
+  },
+  {
+    path: 'board',
+    component: BoardComponent
   }
 ];
 
@@ -27,7 +36,9 @@ const appRoutes: Routes = [
       { enableTracing: false }
     ),
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [MyData],
   bootstrap: [AppComponent]
