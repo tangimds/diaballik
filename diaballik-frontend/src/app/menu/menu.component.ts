@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { MyData } from '../mydata';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {MyData} from '../mydata';
 import {NgForm} from '@angular/forms';
 
 @Component({
@@ -10,19 +10,26 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  name1: string;
+  name2: string;
+  scenario: string;
+  difficulty: string;
+  human: boolean;
 
-  private p1name: any;
-  private p2name: any;
-
-  constructor(private http: HttpClient, private router: Router, private data: MyData) { }
-
-  ngOnInit() {
+  constructor(private http: HttpClient, private router: Router, private data: MyData) {
   }
 
-  onSubmit(form: NgForm) {
-    /*if ( form.value.P2type === 'AI' ) {
+  ngOnInit() {
+    this.name1 = 'Tangi';
+    this.name2 = 'Taha';
+    this.scenario = 'STANDARD';
+    this.human = true;
+  }
+
+  onSubmit() {
+    if (!this.human) {
       // CREATE PVC
-      this.http.put(`game/newGamePVC/${form.value.p1name.toUpperCase()}/${form.value.scenario.toUpperCase()}/${form.value.difficulty.toUpperCase()}`, {}, {}).
+      this.http.put(`game/newGamePVC/${this.name1.toUpperCase()}/${this.scenario.toUpperCase()}/${this.difficulty.toUpperCase()}`, {}, {}).
       subscribe(returnedData => {
         console.log('init game : ');
         console.log(returnedData);
@@ -31,17 +38,18 @@ export class MenuComponent implements OnInit {
       });
     } else {
       // CREATE PVP
-      this.http.put(`game/newGamePVP/${form.value.p1name.toUpperCase()}/${form.value.p2name.toUpperCase()}/${form.value.scenario.toUpperCase()}`, {}, {}).
+      this.http.put(`game/newGamePVP/${this.name1.toUpperCase()}/${this.name2.toUpperCase()}/${this.scenario.toUpperCase()}`, {}, {}).
       subscribe(returnedData => {
         console.log('init game : ');
         console.log(returnedData);
         this.data.setStorage(returnedData);
         this.router.navigate(['board']);
       });
-    }*/console.log(form);
-  }
-
-  player2isAI(form: NgForm) {
-    return form.value.P2type === 'AI';
+    }
+    console.log('name1: ' + this.name1 + '\n' +
+      '  name2: ' + this.name2 + '\n' +
+      '  scenario: ' + this.scenario + '\n' +
+      '  difficulty: ' + this.difficulty + '\n' +
+      '  human: ' + this.human + '');
   }
 }

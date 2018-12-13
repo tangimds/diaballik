@@ -1,0 +1,19 @@
+.left {
+  width: 50%;
+  display: inline-block;
+  margin : 0 auto;
+  vertical-align: top;
+  text-align: center;
+}
+
+.right {
+  width: 50%;
+  display: inline-block;
+  margin : 0 auto;
+  vertical-align: top;
+  text-align: center;
+}
+
+.bottom {
+  text-align: center;
+}

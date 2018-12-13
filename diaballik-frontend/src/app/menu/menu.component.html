@@ -1,32 +1,36 @@
-<h1>New Game</h1>
+<h1 xmlns="http://www.w3.org/1999/html">New Game</h1>
 
-<form (ngSubmit)="onSubmit(f)" #f="ngForm">
-  Player 1 <br> Name : <input type="text" id="name1" class="form-control" name="name1" ngModel required><br>
-  Player 2 <br>
-  <input type="radio" name="P2type" value="AI" ngModel>AI<br>
-  <input type="radio" name="P2type" value="Human" ngModel>Human<br>
-
-  <div *ngIf="!player2isAI(f)">
-    Name : <input type="text" id="name2" class="form-control" name="p2name" ngModel required>
+<form (ngSubmit)="onSubmit()">
+  <div class="left">
+    <h3>Player 1 </h3> <br> Name : <input type="text" [value]="name1" class="form-control"  (input)="name1=$event.target.value" required><br>
   </div>
+  <div class="right">
+    <h3>Player 2 (BLACK)</h3> <br>
+    <input type="radio" name="type" class="form-control" (change)="human = true" checked required>Human
+    <input type="radio" name="type" class="form-control" (change)="human = false" required>AI<br>
+
+    <div *ngIf="this.human">
+      Name : <input type="text" [value]="name2" class="form-control" (input)="name2=$event.target.value"  required>
+    </div>
 
 
-  <div *ngIf="player2isAI(f)">
-    Difficulty :
-    <select  name="difficulty" size="1" ngModel required>
-      <option>NOOB</option>
-      <option>STARTING</option>
-      <option>PROGRESSIVE</option>
+    <div *ngIf="!this.human">
+      Difficulty :
+      <select  [value]="difficulty" size="1" (input)="difficulty=$event.target.value" required>
+        <option>NOOB</option>
+        <option>STARTING</option>
+        <option>PROGRESSIVE</option>
+      </select>
+    </div>
+  </div>
+  <div class="bottom">
+    Scenario :
+    <select  [value]="scenario" size="1" (input)="scenario=$event.target.value" required>
+      <option value="STANDARD">STANDARD</option>
+      <option value="RANDOM">RANDOM</option>
+      <option value="EAU">EAU</option>
     </select>
+    <br>
+    <button type="submit">Launch</button>
   </div>
-
-  Scenario :
-  <select  name="scenario" size="1" ngModel required>
-    <option>STANDARD</option>
-    <option>RANDOM</option>
-    <option>EAU</option>
-  </select>
-  <br>
-  <button type="submit">Launch</button>
-
 </form>
