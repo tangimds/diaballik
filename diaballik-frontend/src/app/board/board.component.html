@@ -1,4 +1,5 @@
-<h2 (click)="playAI()" class="player">{{data.storage.p2.name == null ? data.storage.p2.difficulty+" AI" : data.storage.p2.name}}</h2>
+  <div (click)="playAI()" class="player" id="p2">{{data.storage.p2.name == null ? data.storage.p2.difficulty+" AI" : data.storage.p2.name}}</div>
+
 
 <div class='board'>
   <div class='line' #tiles *ngFor="let y of [7,6,5,4,3,2,1]">
@@ -12,8 +13,6 @@
   </div>
   <div cdkDrag
        (contextmenu)="clearAll()"
-       (cdkDropDropped)="drop($event)"
-       (cdkDragExited)="exit($event)"
        (click)="clickPiece($event)"
        class="piece" #pieces *ngFor="let p of data.storage.board.pieces"
        [style.left.px]="(p.x-1) * 80"
@@ -48,5 +47,7 @@
   </div>
 </div>
 
-<h2 class="player">{{data.storage.p1.name}}</h2>
+
+<div class="player" id="p1">{{data.storage.p1.name}}</div>
+
 

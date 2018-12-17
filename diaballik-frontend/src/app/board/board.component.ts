@@ -1,7 +1,7 @@
 import {Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef} from '@angular/core';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { MyData } from '../mydata';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {MyData} from '../mydata';
 import {CdkDragDrop, CdkDragEnter, CdkDragExit, CdkDragMove} from '@angular/cdk/drag-drop';
 import {until} from 'selenium-webdriver';
 import elementTextContains = until.elementTextContains;
@@ -13,147 +13,169 @@ import elementTextContains = until.elementTextContains;
 })
 export class BoardComponent implements OnInit, AfterViewInit {
 
-  @ViewChildren('tiles')
-  private tiles: QueryList<ElementRef>;
-
-  @ViewChildren('pieces')
-  private pieces: QueryList<ElementRef>;
-
+  /*
+  global variables declaration
+   */
   private list: any[];
   private passing: boolean;
   private moving: boolean;
+  private currentSelection: any;
 
   constructor(private http: HttpClient, private router: Router, private data: MyData) {
     this.list = [];
     this.passing = false;
     this.moving = false;
+
+    const urlTree = this.router.parseUrl(this.router.url);
+    // PVC
+    if (urlTree.queryParams.m === 'PVC') {
+      const n1 = (urlTree.queryParams.n1).toUpperCase();
+      const sce = (urlTree.queryParams.sce).toUpperCase();
+      const d = (urlTree.queryParams.d).toUpperCase();
+      this.http.put(`game/newGamePVC/${n1}/${sce}/${d}`, {}, {}).subscribe(returnedData => {
+        console.log('init game : ');
+        console.log(returnedData);
+        this.data.setStorage(returnedData);
+      });
+    }
+
+    // PVP
+    if (urlTree.queryParams.m === 'PVP') {
+      const n1 = (urlTree.queryParams.n1).toUpperCase();
+      const n2 = (urlTree.queryParams.n2).toUpperCase();
+      const sce = (urlTree.queryParams.sce).toUpperCase();
+      this.http.put(`game/newGamePVP/${n1}/${n2}/${sce}`, {}, {}).subscribe(returnedData => {
+        console.log('init game : ');
+        console.log(returnedData);
+        this.data.setStorage(returnedData);
+      });
+    }
   }
 
   ngOnInit() {
+
   }
 
   ngAfterViewInit(): void {
-    // this.tiles.forEach(tile => console.log(tile.nativeElement));
-    // this.pieces.forEach(p => console.log(p.nativeElement));
+    this.changeIndicator();
   }
 
-  public rightClick(event: MouseEvent): void {
-    // this does not work (there is no backend in this example), but it shows how
-    // to send an HTTP request (a PUT request here) to a backend server.
-    // Note the `string text ${code}` used to build strings.
-    // 'as' is used to cast.
-    // 'getAttribute('data-x')' gets the value of the attribute data-x of the targeted div (see the HTML file).
-    // https://angular.io/guide/http
-    this.http.put(`game/myapi/${(event.currentTarget as Element).getAttribute('data-x')}`, {}, {}).
-    // This is reactive programming + future object:
-    // the request is sent. You can subscribe to (wait for) the returned data as follows:
-    subscribe(returnedData => console.log(returnedData));
-  }
-
+  /*
+  the AI play a move
+   */
   public playAI() {
-    this.http.get(`game/IAPlay`, {}).
-    subscribe(returnedData => {
-      this.data.setStorage(returnedData);
-      console.log(returnedData);
-    }, error => console.log(error) // error path
+    this.http.get(`game/IAPlay`, {}).subscribe(returnedData => {
+        this.data.setStorage(returnedData);
+        console.log(returnedData);
+      }, error => console.log(error) // error path
     );
+    this.changeIndicator();
   }
 
+  /*
+  called when there is a click on a piece
+   */
   clickPiece(event: MouseEvent) {
     this.unselectAll();
     (event.currentTarget as Element).classList.add('selected');
     if (!this.passing) {
-      this.list = [];
-      this.list.push(event.currentTarget as Element);
+      this.currentSelection = event.currentTarget as Element;
       this.moving = true;
-      console.log('MOVING' + this.moving);
     }
     if (this.passing) {
-      this.list.push(event.currentTarget as Element);
-      console.log('PAAAAAASS');
-      this.http.put(`game/moveBall/${this.list[0].getAttribute('data-x')}/${this.list[0].getAttribute('data-y')}/${this.list[1].getAttribute('data-x')}/${this.list[1].getAttribute('data-y')}`, {}, {}).
-      subscribe(returnedData => {
+      const dest = event.currentTarget as Element;
+      this.http.put(`game/moveBall/` +
+        `${this.currentSelection.getAttribute('data-x')}/${this.currentSelection.getAttribute('data-y')}/` +
+        `${dest.getAttribute('data-x')}/${dest.getAttribute('data-y')}`, {}, {}).subscribe(returnedData => {
         this.data.setStorage(returnedData);
-        this.list = [];
+        this.currentSelection = null;
         this.passing = false;
         console.log(returnedData);
+        this.changeIndicator();
       }, error => {
         console.log(error);
-        this.list = [];
+        this.currentSelection = null;
         this.passing = false;
         alert('Pass unauthorized');
-
       });
     }
-    console.log(this.list);
   }
 
+  /*
+  called when there is a click on a tile
+   */
   clickTile(event: MouseEvent) {
     this.unselectAll();
     if (this.moving) {
-      this.list.push(event.currentTarget as Element);
-      this.http.put(`game/movePiece/${this.list[0].getAttribute('data-x')}/${this.list[0].getAttribute('data-y')}/${this.list[1].getAttribute('data-x')}/${this.list[1].getAttribute('data-y')}`, {}, {}).
-      subscribe(returnedData => {
+      const dest = event.currentTarget as Element;
+      this.http.put(`game/movePiece/` +
+        `${this.currentSelection.getAttribute('data-x')}/${this.currentSelection.getAttribute('data-y')}/` +
+        `${dest.getAttribute('data-x')}/${dest.getAttribute('data-y')}`, {}, {}).subscribe(returnedData => {
         this.data.setStorage(returnedData);
-        this.list = [];
+        this.currentSelection = null;
         this.moving = false;
         console.log(returnedData);
+        this.changeIndicator();
       }, error => {
         console.log(error);
-        this.list = [];
+        this.currentSelection = null;
         this.moving = false;
         alert('Move unauthorized');
       });
     }
-    console.log(this.list);
   }
 
+  /*
+  called when there is a click on a ball
+   */
   clickBall(event: MouseEvent) {
     this.unselectAll();
     (event.currentTarget as Element).classList.add('selected');
     if (!this.moving && !this.passing) {
-      this.list.push(event.currentTarget as Element);
+      this.currentSelection = event.currentTarget as Element;
       this.passing = true;
     }
-    console.log(this.list);
   }
 
+  /*
+  deselect the piece or ball selected
+  reset the variables
+   */
   clearAll() {
     this.unselectAll();
     console.log('CLEAR');
-    this.list = [];
+    this.currentSelection = null;
     this.passing = false;
     this.moving = false;
     return false;
   }
 
   unselectAll() {
-    let e: HTMLCollectionOf<Element>;
-    e = document.getElementsByClassName('piece');
-    for (const i of e) {
-      i.classList.remove('selected');
-      console.log(i);
+    const pieces = document.getElementsByClassName('piece');
+    for (let i = 0; i < pieces.length; i++) {
+      pieces[i].classList.remove('selected');
     }
-    e = document.getElementsByClassName('ball');
-    for (const i of e) {
-      i.classList.remove('selected');
-      console.log(i);
+    const balls = document.getElementsByClassName('ball');
+    for (let i = 0; i < balls.length; i++) {
+      balls[i].classList.remove('selected');
     }
   }
-  isSelected(e: Element) {
-    // console.log('SELECTED');
-    // console.log(e);
-    this.list.forEach( el => {
-      if (el === e) {
-        // e.classList.add('selected');
-        console.log(true);
-        return true;
-      } else {
-        // e.classList.remove('selected');
-        console.log(false);
 
-        return false;
-      }
-    });
+  changeIndicator() {
+    const ind1 = document.getElementById('indicator1');
+    const ind2 = document.getElementById('indicator2');
+
+    const p1 = document.getElementById('p1');
+    const p2 = document.getElementById('p2');
+    console.log('IND');
+    if ((this.data.storage.nbTurn % 2) === 0) {
+      // pair
+      p2.classList.remove('playing');
+      p1.classList.add('playing');
+    } else {
+      // impair
+      p1.classList.remove('playing');
+      p2.classList.add('playing');
+    }
   }
 }

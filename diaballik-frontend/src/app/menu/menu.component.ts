@@ -29,22 +29,10 @@ export class MenuComponent implements OnInit {
   onSubmit() {
     if (!this.human) {
       // CREATE PVC
-      this.http.put(`game/newGamePVC/${this.name1.toUpperCase()}/${this.scenario.toUpperCase()}/${this.difficulty.toUpperCase()}`, {}, {}).
-      subscribe(returnedData => {
-        console.log('init game : ');
-        console.log(returnedData);
-        this.data.setStorage(returnedData);
-        this.router.navigate(['board']);
-      });
+      this.router.navigate(['board'], { queryParams: {m: 'PVC', n1: this.name1, sce: this.scenario, d: this.difficulty }});
     } else {
       // CREATE PVP
-      this.http.put(`game/newGamePVP/${this.name1.toUpperCase()}/${this.name2.toUpperCase()}/${this.scenario.toUpperCase()}`, {}, {}).
-      subscribe(returnedData => {
-        console.log('init game : ');
-        console.log(returnedData);
-        this.data.setStorage(returnedData);
-        this.router.navigate(['board']);
-      });
+      this.router.navigate(['board'], { queryParams: {m: 'PVP', n1: this.name1, n2: this.name2, sce: this.scenario }});
     }
     console.log('name1: ' + this.name1 + '\n' +
       '  name2: ' + this.name2 + '\n' +
