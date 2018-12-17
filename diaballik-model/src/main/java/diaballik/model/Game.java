@@ -105,10 +105,10 @@ public class Game {
 	}
 
 	public boolean play(final Action a) {
-		if (!a.verifyAction(board)) {
+		if (!a.verifyAction(board) || (nbTurn & 1) == 0 && a.getColor()==Color.BLACK || (nbTurn & 1) != 0 && a.getColor()==Color.WHITE) {
 			return false;
 		}
-		if ((nbTurn & 1) == 0 || (p2 instanceof HumanPlayer)) {
+		if ((nbTurn & 1) == 0 && a.getColor()==Color.WHITE || (p2 instanceof HumanPlayer) && a.getColor()==Color.BLACK) {
 			actions.add(a);
 			a.execute(board);
 			nbActions++;
