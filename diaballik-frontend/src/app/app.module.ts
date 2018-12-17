@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
 import { MenuComponent } from './menu/menu.component';
 import {MyData} from './mydata';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
 
 const appRoutes: Routes = [
   { path: '',
@@ -38,7 +40,8 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DragDropModule
   ],
   providers: [MyData],
   bootstrap: [AppComponent]

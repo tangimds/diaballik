@@ -2,6 +2,9 @@ import {Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef} f
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MyData } from '../mydata';
+import {CdkDragDrop, CdkDragEnter, CdkDragExit, CdkDragMove} from '@angular/cdk/drag-drop';
+import {until} from 'selenium-webdriver';
+import elementTextContains = until.elementTextContains;
 
 @Component({
   selector: 'app-board',
@@ -16,7 +19,14 @@ export class BoardComponent implements OnInit, AfterViewInit {
   @ViewChildren('pieces')
   private pieces: QueryList<ElementRef>;
 
+  private list: any[];
+  private passing: boolean;
+  private moving: boolean;
+
   constructor(private http: HttpClient, private router: Router, private data: MyData) {
+    this.list = [];
+    this.passing = false;
+    this.moving = false;
   }
 
   ngOnInit() {
@@ -40,57 +50,110 @@ export class BoardComponent implements OnInit, AfterViewInit {
     subscribe(returnedData => console.log(returnedData));
   }
 
-  public movePiece(x, y) {
-    this.http.put(`game/newGamePVC/MENDES/STANDARD/NOOB`, {}, {}).
-    subscribe(returnedData => console.log(returnedData));
-  }
-
-  public onDragStart(event) {
-    console.log('START DRAG');
-    event.preventDefault();
-  }
-
-  public onDrag(event) {
-    console.log('DRAGGING');
-    event.preventDefault();
-  }
-
-  public onDragEnd(event) {
-    console.log('DRAG END');
-    event.preventDefault();
-  }
-
-  public onClick(e) {
-    console.log(e.target.attributes['data-x'].value);
-
-  }
-
-  public test() {
-    this.http.put(`game/movePiece/1/1/1/2`, {}, {}).
-    subscribe(returnedData => {
-      this.data.setStorage(returnedData);
-      console.log(returnedData);
-    });
-
-    this.http.put(`game/movePiece/1/2/1/3`, {}, {}).
-    subscribe(returnedData => {
-      this.data.setStorage(returnedData);
-      console.log(returnedData);
-    });
-
-    this.http.put(`game/moveBall/4/1/7/1`, {}, {}).
-    subscribe(returnedData => {
-      this.data.setStorage(returnedData);
-      console.log(returnedData);
-    });
-  }
-
   public playAI() {
     this.http.get(`game/IAPlay`, {}).
     subscribe(returnedData => {
       this.data.setStorage(returnedData);
       console.log(returnedData);
-    });
+    }, error => console.log(error) // error path
+    );
   }
 
+  clickPiece(event: MouseEvent) {
+    this.unselectAll();
+    (event.currentTarget as Element).classList.add('selected');
+    if (!this.passing) {
+      this.list = [];
+      this.list.push(event.currentTarget as Element);
+      this.moving = true;
+      console.log('MOVING' + this.moving);
+    }
+    if (this.passing) {
+      this.list.push(event.currentTarget as Element);
+      console.log('PAAAAAASS');
+      this.http.put(`game/moveBall/${this.list[0].getAttribute('data-x')}/${this.list[0].getAttribute('data-y')}/${this.list[1].getAttribute('data-x')}/${this.list[1].getAttribute('data-y')}`, {}, {}).
+      subscribe(returnedData => {
+        this.data.setStorage(returnedData);
+        this.list = [];
+        this.passing = false;
+        console.log(returnedData);
+      }, error => {
+        console.log(error);
+        this.list = [];
+        this.passing = false;
+        alert('Pass unauthorized');
+
+      });
+    }
+    console.log(this.list);
+  }
+
+  clickTile(event: MouseEvent) {
+    this.unselectAll();
+    if (this.moving) {
+      this.list.push(event.currentTarget as Element);
+      this.http.put(`game/movePiece/${this.list[0].getAttribute('data-x')}/${this.list[0].getAttribute('data-y')}/${this.list[1].getAttribute('data-x')}/${this.list[1].getAttribute('data-y')}`, {}, {}).
+      subscribe(returnedData => {
+        this.data.setStorage(returnedData);
+        this.list = [];
+        this.moving = false;
+        console.log(returnedData);
+      }, error => {
+        console.log(error);
+        this.list = [];
+        this.moving = false;
+        alert('Move unauthorized');
+      });
+    }
+    console.log(this.list);
+  }
+
+  clickBall(event: MouseEvent) {
+    this.unselectAll();
+    (event.currentTarget as Element).classList.add('selected');
+    if (!this.moving && !this.passing) {
+      this.list.push(event.currentTarget as Element);
+      this.passing = true;
+    }
+    console.log(this.list);
+  }
+
+  clearAll() {
+    this.unselectAll();
+    console.log('CLEAR');
+    this.list = [];
+    this.passing = false;
+    this.moving = false;
+    return false;
+  }
+
+  unselectAll() {
+    let e: HTMLCollectionOf<Element>;
+    e = document.getElementsByClassName('piece');
+    for (const i of e) {
+      i.classList.remove('selected');
+      console.log(i);
+    }
+    e = document.getElementsByClassName('ball');
+    for (const i of e) {
+      i.classList.remove('selected');
+      console.log(i);
+    }
+  }
+  isSelected(e: Element) {
+    // console.log('SELECTED');
+    // console.log(e);
+    this.list.forEach( el => {
+      if (el === e) {
+        // e.classList.add('selected');
+        console.log(true);
+        return true;
+      } else {
+        // e.classList.remove('selected');
+        console.log(false);
+
+        return false;
+      }
+    });
+  }
 }

@@ -1,43 +1,52 @@
 <h2 (click)="playAI()" class="player">{{data.storage.p2.name == null ? data.storage.p2.difficulty+" AI" : data.storage.p2.name}}</h2>
 
-<div class='board'
-     oncontextmenu="return false;">
-  <div class='line' #tiles *ngFor="let y of [7,6,5,4,3,2,1]"
-       oncontextmenu="return false;">
-    <div class='tile' #tiles *ngFor="let x of [1,2,3,4,5,6,7]"
-         oncontextmenu="return false;"
+<div class='board'>
+  <div class='line' #tiles *ngFor="let y of [7,6,5,4,3,2,1]">
+    <div cdkDropList
+         class='tile' #tiles *ngFor="let x of [1,2,3,4,5,6,7]"
          [attr.data-x]=x
          [attr.data-y]=y
-    >
+         (click)="clickTile($event)"
+         (contextmenu)="clearAll()">
     </div>
   </div>
-  <div class='piece' #pieces *ngFor="let p of data.storage.board.pieces"
+  <div cdkDrag
+       (contextmenu)="clearAll()"
+       (cdkDropDropped)="drop($event)"
+       (cdkDragExited)="exit($event)"
+       (click)="clickPiece($event)"
+       class="piece" #pieces *ngFor="let p of data.storage.board.pieces"
        [style.left.px]="(p.x-1) * 80"
        [style.top.px]="((8-p.y)-1) * 80"
        [style.border]="'12px solid '+p.color"
        [attr.data-x]=p.x
        [attr.data-y]=p.y
-       draggable="true"
-       (dragstart)='onDragStart($event)'
-       (drag)="onDrag($event)"
-       (dragover)="onDrag($event)"
-       (drop)="onDragEnd($event)"
-       (dragend)="onDragEnd($event)"
-        (click)="onClick($event)">
+       >
   </div>
+
   <div class='ball' #ball
        [style.left.px]="(data.storage.board.currentBlackHolder.x-1) * 80  "
        [style.top.px]="((8-data.storage.board.currentBlackHolder.y)-1) * 80"
        [style.background]="data.storage.board.currentBlackHolder.color"
+       [attr.data-x]=data.storage.board.currentBlackHolder.x
+       [attr.data-y]=data.storage.board.currentBlackHolder.y
+       (click)="clickBall($event)"
+       (contextmenu)="clearAll()"
   >
   </div>
+
+
   <div class='ball' #ball
        [style.left.px]="(data.storage.board.currentWhiteHolder.x-1) * 80  "
        [style.top.px]="((8-data.storage.board.currentWhiteHolder.y)-1) * 80"
        [style.background]="data.storage.board.currentWhiteHolder.color"
+       [attr.data-x]=data.storage.board.currentWhiteHolder.x
+       [attr.data-y]=data.storage.board.currentWhiteHolder.y
+       (click)="clickBall($event)"
+       (contextmenu)="clearAll()"
   >
   </div>
 </div>
 
-<h2 (click)="test()" class="player">{{data.storage.p1.name}}</h2>
+<h2 class="player">{{data.storage.p1.name}}</h2>
 

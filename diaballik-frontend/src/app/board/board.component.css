@@ -37,7 +37,6 @@ div {
   height: var(--size-piece);
   border-radius: calc(var(--size-piece)/2);
   border: 1px solid red;
-  z-index: 2;
   padding: 0;
   margin: calc((var(--size-cell) - var(--size-piece))/2);
 }
@@ -55,5 +54,8 @@ div {
 
 .player{
   text-align: center;
+}
 
+.selected {
+  box-shadow: 0px 0px 20px 0 rgba(0, 255, 0, 1);
 }
