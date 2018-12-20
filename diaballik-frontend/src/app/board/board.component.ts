@@ -20,11 +20,14 @@ export class BoardComponent implements OnInit, AfterViewInit {
   private passing: boolean;
   private moving: boolean;
   private currentSelection: any;
+  private gameWon: boolean;
+  private nbMoves: any;
 
   constructor(private http: HttpClient, private router: Router, private data: MyData) {
     this.list = [];
     this.passing = false;
     this.moving = false;
+
 
     const urlTree = this.router.parseUrl(this.router.url);
     // PVC
@@ -53,7 +56,8 @@ export class BoardComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
+    this.gameWon = this.data.storage.winner !== 'NONE';
+    this.nbMoves = 0;
   }
 
   ngAfterViewInit(): void {
@@ -61,15 +65,48 @@ export class BoardComponent implements OnInit, AfterViewInit {
   }
 
   /*
-  the AI play a move
+  the AI play its 3 moves
    */
-  public playAI() {
-    this.http.get(`game/IAPlay`, {}).subscribe(returnedData => {
-        this.data.setStorage(returnedData);
-        console.log(returnedData);
-      }, error => console.log(error) // error path
-    );
-    this.changeIndicator();
+  public playAI(delay) {
+    // TODO : ajout indicateur 'is playing'
+    setTimeout(() => {
+      this.http.get(`game/IAPlay`, {})
+        .subscribe(returnedData => {
+            this.data.setStorage(returnedData);
+            this.nbMoves++;
+            console.log(returnedData);
+            if (this.isWon()) {
+              return;
+            }
+            setTimeout(() => {
+              this.http.get(`game/IAPlay`, {})
+                .subscribe(returnedData2 => {
+                    this.data.setStorage(returnedData2);
+                    this.nbMoves++;
+                    console.log(returnedData2);
+                    if (this.isWon()) {
+                      return;
+                    }
+                    setTimeout(() => {
+                      this.http.get(`game/IAPlay`, {})
+                        .subscribe(returnedData3 => {
+                            this.data.setStorage(returnedData3);
+                            this.nbMoves++;
+                            console.log(returnedData3);
+                            this.changeIndicator();
+                            if (this.isWon()) {
+                              return;
+                            }
+                            }
+                          , error => console.log(error) // error path
+                        );
+                    }, delay);
+                  }, error => console.log(error) // error path
+                );
+            }, delay);
+            }, error => console.log(error) // error path
+        );
+    }, delay);
   }
 
   /*
@@ -77,6 +114,9 @@ export class BoardComponent implements OnInit, AfterViewInit {
    */
   clickPiece(event: MouseEvent) {
     this.unselectAll();
+    if (this.isWon()) {
+      return;
+    }
     (event.currentTarget as Element).classList.add('selected');
     if (!this.passing) {
       this.currentSelection = event.currentTarget as Element;
@@ -88,6 +128,7 @@ export class BoardComponent implements OnInit, AfterViewInit {
         `${this.currentSelection.getAttribute('data-x')}/${this.currentSelection.getAttribute('data-y')}/` +
         `${dest.getAttribute('data-x')}/${dest.getAttribute('data-y')}`, {}, {}).subscribe(returnedData => {
         this.data.setStorage(returnedData);
+        this.nbMoves++;
         this.currentSelection = null;
         this.passing = false;
         console.log(returnedData);
@@ -106,6 +147,9 @@ export class BoardComponent implements OnInit, AfterViewInit {
    */
   clickTile(event: MouseEvent) {
     this.unselectAll();
+    if (this.isWon()) {
+      return;
+    }
     if (this.moving) {
       const dest = event.currentTarget as Element;
       this.http.put(`game/movePiece/` +
@@ -115,6 +159,7 @@ export class BoardComponent implements OnInit, AfterViewInit {
         this.currentSelection = null;
         this.moving = false;
         console.log(returnedData);
+        this.nbMoves++;
         this.changeIndicator();
       }, error => {
         console.log(error);
@@ -130,6 +175,9 @@ export class BoardComponent implements OnInit, AfterViewInit {
    */
   clickBall(event: MouseEvent) {
     this.unselectAll();
+    if (this.isWon()) {
+      return;
+    }
     (event.currentTarget as Element).classList.add('selected');
     if (!this.moving && !this.passing) {
       this.currentSelection = event.currentTarget as Element;
@@ -176,6 +224,59 @@ export class BoardComponent implements OnInit, AfterViewInit {
       // impair
       p1.classList.remove('playing');
       p2.classList.add('playing');
+    }
+
+    if ((this.data.storage.nbTurn % 2) === 1 && this.data.storage.p2.type === 'AIPlayer' && !this.isWon()) {
+      this.playAI(1000);
+    }
+  }
+
+  saveGame() {
+    this.http.get(`game/save/`).
+    subscribe(() => {
+      console.log('saving game ' + this.data.storage.id);
+      alert('Game ' + this.data.storage.id + ' saved !');
+    });
+  }
+
+  goMenu() {
+    this.router.navigate(['menu']);
+  }
+
+  clickUndo() {
+    if (!this.gameWon) {
+      return;
+    }
+    this.http.get(`game//replay/undo`).
+    subscribe((returnedData) => {
+      console.log('undo ');
+      this.data.setStorage(returnedData);
+      console.log(returnedData);
+      this.nbMoves--;
+    });
+  }
+
+  clickRedo() {
+    if (!this.gameWon) {
+      return;
+    }
+    this.http.get(`game//replay/redo`).
+    subscribe((returnedData) => {
+      console.log('redo ');
+      this.data.setStorage(returnedData);
+      this.nbMoves++;
+      console.log(returnedData);
+
+    });
+  }
+
+  isWon() {
+    if (this.data.storage.winner !== 'NONE' || this.gameWon) {
+      this.gameWon = true;
+      return true;
+    } else {
+      this.gameWon = false;
+      return false;
     }
   }
 }

@@ -9,6 +9,8 @@ import { BoardComponent } from './board/board.component';
 import { MenuComponent } from './menu/menu.component';
 import {MyData} from './mydata';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
+  MatSortModule, MatTableModule } from '@angular/material';
 
 
 const appRoutes: Routes = [
@@ -41,7 +43,12 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    MatTableModule
   ],
   providers: [MyData],
   bootstrap: [AppComponent]

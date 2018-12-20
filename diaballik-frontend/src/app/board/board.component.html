@@ -1,9 +1,20 @@
-  <div (click)="playAI()" class="player" id="p2">{{data.storage.p2.name == null ? data.storage.p2.difficulty+" AI" : data.storage.p2.name}}</div>
+<div class="panel">
+  {{data.storage.p1.name}} vs {{data.storage.p2.name == null ? data.storage.p2.difficulty+" AI" : data.storage.p2.name}}
+   -- Turn {{data.storage.nbTurn + 1}} ({{this.nbMoves}} move(s))
+   --
+  <button (click)="saveGame()">Save</button>
+  <button (click)="goMenu()">MENU</button>
+  --
+  <button (click)="clickUndo()" [disabled]="!isWon()"><</button>
+  <button (click)="clickRedo()" [disabled]="!isWon()">></button>
+</div>
+
+<div class="player" id="p2">{{data.storage.p2.name == null ? data.storage.p2.difficulty+" AI" : data.storage.p2.name}}</div>
 
 
 <div class='board'>
   <div class='line' #tiles *ngFor="let y of [7,6,5,4,3,2,1]">
-    <div cdkDropList
+    <div
          class='tile' #tiles *ngFor="let x of [1,2,3,4,5,6,7]"
          [attr.data-x]=x
          [attr.data-y]=y
@@ -11,7 +22,7 @@
          (contextmenu)="clearAll()">
     </div>
   </div>
-  <div cdkDrag
+  <div
        (contextmenu)="clearAll()"
        (click)="clickPiece($event)"
        class="piece" #pieces *ngFor="let p of data.storage.board.pieces"
