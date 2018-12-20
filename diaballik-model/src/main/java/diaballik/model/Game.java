@@ -104,6 +104,7 @@ public class Game {
 		nbTurn = t;
 	}
 
+	// TODO : empecher de jouer si la partie est finie
 	public boolean play(final Action a) {
 		if (!a.verifyAction(board) || (nbTurn & 1) == 0 && a.getColor()==Color.BLACK || (nbTurn & 1) != 0 && a.getColor()==Color.WHITE) {
 			return false;
@@ -144,6 +145,7 @@ public class Game {
 		}
 	}
 
+	// TODO : refaire la maj de nbTurn
 	public boolean nextAction() {
 		if (nbActions == actions.size()) {
 			return false;
@@ -171,7 +173,7 @@ public class Game {
 		a.undo(board);
 		this.winner = "NONE";
 		nbActions--;
-		if (nbActions % 3 == 0) {
+		if ((nbActions+1) % 3 == 0) {
 			nbTurn--;
 		}
 		return true;
@@ -190,7 +192,7 @@ public class Game {
 	}
 
 	@JsonIgnore
-	public static List<String> getSavedGames() {
+	public static List<String> getSavedGames() { // TODO : ne recupere que l'id du dernier game
 		final String path = System.getProperty("user.home") + System.getProperty("file.separator") + "Diaballik" + System.getProperty("file.separator");
 		final List<String> results = new ArrayList<>();
 		final Optional<File[]> files = Optional.ofNullable(new File(path).listFiles());
