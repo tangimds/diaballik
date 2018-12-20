@@ -3,8 +3,6 @@ import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {MyData} from '../mydata';
 import {NgForm} from '@angular/forms';
-import {homedir} from 'os-homedir';
-import * as os from "os";
 
 
 @Component({
@@ -21,7 +19,7 @@ export class MenuComponent implements OnInit {
   modeMenu: any;
 
   dataSource: any[];
-  displayedColumns = ['id', 'p1', 'p2'];
+  displayedColumns = ['id', 'p1', 'p2', 'nbTurn', 'nbMoves', 'winner'];
 
   constructor(private http: HttpClient, private router: Router, private data: MyData) {
   }
@@ -32,19 +30,32 @@ export class MenuComponent implements OnInit {
     this.scenario = 'STANDARD';
     this.human = true;
     this.modeMenu = 'new';
-    this.dataSource = [
-      {"p1":{"type":"HumanPlayer","@id":1,"name":"jean","color":"WHITE"},"p2":{"type":"AIPlayer","@id":2,"name":null,"color":"BLACK","difficulty":"NOOB"},"scenario":"STANDARD","nbTurn":2,"id":1544048964387,"actions":[{"type":"MovePiece","piece":{"type":"Piece","color":"WHITE","x":1,"y":2},"dx":0,"dy":1},{"type":"MovePiece","piece":{"type":"Piece","color":"WHITE","x":3,"y":2},"dx":0,"dy":1},{"type":"MovePiece","piece":{"type":"Piece","color":"WHITE","x":3,"y":2},"dx":1,"dy":0},{"type":"MovePiece","piece":{"type":"Piece","color":"BLACK","x":1,"y":5},"dx":0,"dy":-1},{"type":"MovePiece","piece":{"type":"Piece","color":"BLACK","x":1,"y":5},"dx":0,"dy":-1},{"type":"MoveBall","startingPiece":{"type":"Piece","color":"BLACK","x":4,"y":7},"endingPiece":{"type":"Piece","color":"BLACK","x":3,"y":7}}],"board":{"currentWhiteHolder":{"type":"Piece","color":"WHITE","x":4,"y":1},"currentBlackHolder":{"type":"Piece","color":"BLACK","x":3,"y":7},"pieces":[{"type":"Piece","color":"WHITE","x":1,"y":2},{"type":"Piece","color":"WHITE","x":3,"y":2},{"type":"Piece","color":"WHITE","x":3,"y":1},{"type":"Piece","color":"WHITE","x":4,"y":1},{"type":"Piece","color":"WHITE","x":5,"y":1},{"type":"Piece","color":"WHITE","x":6,"y":1},{"type":"Piece","color":"WHITE","x":7,"y":1},{"type":"Piece","color":"BLACK","x":1,"y":5},{"type":"Piece","color":"BLACK","x":2,"y":7},{"type":"Piece","color":"BLACK","x":3,"y":7},{"type":"Piece","color":"BLACK","x":4,"y":7},{"type":"Piece","color":"BLACK","x":5,"y":7},{"type":"Piece","color":"BLACK","x":6,"y":7},{"type":"Piece","color":"BLACK","x":7,"y":7}]},"winner":"NONE"}
-      ,
-      {'id':66666,'p1':{'type':'HumanPlayer','@id':1,'name':'mabite','color':'WHITE'},'p2':{'type':'HumanPlayer','@id':1,'name':'toto','color':'WHITE'}}
-    ];
+    this.dataSource = [];
+    this.http.get(`game/savedGames/`).
+    subscribe((returnedData) => {
+      console.log('loading games ... ');
+      // console.log(Object.values(returnedData));
+      Object.values(returnedData).forEach( id => {
+        this.http.put(`game/loadGame/${id}`, {}, {}).
+        subscribe(gameDetail => {
+          // console.log('load a game');
+          // this.data.setStorage(returnedData);
+          this.dataSource.push(gameDetail);
+          // console.log(gameDetail);
+          // console.log(this.dataSource);
+        });
+      });
+    });
   }
 
   onSubmit() {
     if (!this.human) {
       // CREATE PVC
+      this.data.loaded = false;
       this.router.navigate(['board'], { queryParams: {m: 'PVC', n1: this.name1, sce: this.scenario, d: this.difficulty }});
     } else {
       // CREATE PVP
+      this.data.loaded = false;
       this.router.navigate(['board'], { queryParams: {m: 'PVP', n1: this.name1, n2: this.name2, sce: this.scenario }});
     }
     console.log('name1: ' + this.name1 + '\n' +
@@ -59,7 +70,32 @@ export class MenuComponent implements OnInit {
   }
   loadGameclicked() {
     this.modeMenu = 'load';
+  }
 
+  cellClick(g) {
+    console.log('CLICKED');
+    console.log(g);
+    this.human = (g.p2.type !== 'AIPlayer');
+    console.log(this.human);
+    if (!this.human) {
+      // CREATE PVC
+      console.log('PVC');
+      console.log(g.p1.name);
+      console.log(g.scenario);
+      console.log(g.p2.difficulty);
+      this.data.storage = g;
+      this.data.loaded = true;
+      this.router.navigate(['board'], { queryParams: {m: 'PVC', n1: g.p1.name, sce: g.scenario, d: g.p2.difficulty }});
+    } else {
+      // CREATE PVP
+      console.log('PVP');
+      console.log(g.p1.name);
+      console.log(g.p2.name);
+      console.log( g.scenario);
+      this.data.storage = g;
+      this.data.loaded = true;
+      this.router.navigate(['board'], { queryParams: {m: 'PVP', n1: g.p1.name, n2: g.p2.name, sce: g.scenario }});
+    }
   }
 
 

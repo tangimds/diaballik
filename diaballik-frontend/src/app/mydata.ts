@@ -9,13 +9,10 @@ export class MyData {
   // The data to store
   // any: https://www.typescriptlang.org/docs/handbook/basic-types.html
   public storage: any;
-  public test: any;
+  public loaded: boolean;
 
   public constructor() {
-  }
-
-  public setTest(d) {
-    this.test = d;
+    this.loaded = false;
   }
 
   public setStorage(data) {

@@ -28,40 +28,47 @@ export class BoardComponent implements OnInit, AfterViewInit {
     this.passing = false;
     this.moving = false;
 
+    if (!this.data.loaded) {
+      this.nbMoves = 0;
+      const urlTree = this.router.parseUrl(this.router.url);
+      // PVC
+      if (urlTree.queryParams.m === 'PVC') {
+        const n1 = (urlTree.queryParams.n1).toUpperCase();
+        const sce = (urlTree.queryParams.sce).toUpperCase();
+        const d = (urlTree.queryParams.d).toUpperCase();
+        this.http.put(`game/newGamePVC/${n1}/${sce}/${d}`, {}, {}).subscribe(returnedData => {
+          console.log('init game : ');
+          console.log(returnedData);
+          this.data.setStorage(returnedData);
+        });
+      }
 
-    const urlTree = this.router.parseUrl(this.router.url);
-    // PVC
-    if (urlTree.queryParams.m === 'PVC') {
-      const n1 = (urlTree.queryParams.n1).toUpperCase();
-      const sce = (urlTree.queryParams.sce).toUpperCase();
-      const d = (urlTree.queryParams.d).toUpperCase();
-      this.http.put(`game/newGamePVC/${n1}/${sce}/${d}`, {}, {}).subscribe(returnedData => {
-        console.log('init game : ');
-        console.log(returnedData);
-        this.data.setStorage(returnedData);
-      });
-    }
-
-    // PVP
-    if (urlTree.queryParams.m === 'PVP') {
-      const n1 = (urlTree.queryParams.n1).toUpperCase();
-      const n2 = (urlTree.queryParams.n2).toUpperCase();
-      const sce = (urlTree.queryParams.sce).toUpperCase();
-      this.http.put(`game/newGamePVP/${n1}/${n2}/${sce}`, {}, {}).subscribe(returnedData => {
-        console.log('init game : ');
-        console.log(returnedData);
-        this.data.setStorage(returnedData);
-      });
+      // PVP
+      if (urlTree.queryParams.m === 'PVP') {
+        const n1 = (urlTree.queryParams.n1).toUpperCase();
+        const n2 = (urlTree.queryParams.n2).toUpperCase();
+        const sce = (urlTree.queryParams.sce).toUpperCase();
+        this.http.put(`game/newGamePVP/${n1}/${n2}/${sce}`, {}, {}).subscribe(returnedData => {
+          console.log('init game : ');
+          console.log(returnedData);
+          this.data.setStorage(returnedData);
+        });
+      }
+    } else {
+      this.nbMoves = this.data.storage.actions.length;
     }
   }
 
   ngOnInit() {
-    this.gameWon = this.data.storage.winner !== 'NONE';
-    this.nbMoves = 0;
   }
 
   ngAfterViewInit(): void {
     this.changeIndicator();
+    this.gameWon = this.data.storage.winner !== 'NONE';
+    // console.log('afterviexinti');
+    this.nbMoves = this.data.storage.actions.length;
+    // console.log(this.data.storage);
+    // console.log(this.gameWon);
   }
 
   /*
@@ -240,14 +247,17 @@ export class BoardComponent implements OnInit, AfterViewInit {
   }
 
   goMenu() {
+    this.data.storage = {};
     this.router.navigate(['menu']);
   }
 
   clickUndo() {
+    console.log('UNDO');
+    console.log(this.gameWon);
     if (!this.gameWon) {
       return;
     }
-    this.http.get(`game//replay/undo`).
+    this.http.get(`game/replay/undo`).
     subscribe((returnedData) => {
       console.log('undo ');
       this.data.setStorage(returnedData);
