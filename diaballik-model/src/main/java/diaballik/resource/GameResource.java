@@ -15,6 +15,8 @@ import diaballik.model.MoveBall;
 import io.swagger.annotations.Api;
 import javax.inject.Singleton;
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonBuilderFactory;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -24,7 +26,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 @Singleton
 @Path("game")
@@ -81,11 +87,19 @@ public class GameResource {
 	@Path("/savedGames/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response savedGames() {
-		final JsonObjectBuilder response = Json.createObjectBuilder();
-		Game.getSavedGames().forEach(s -> {
-			response.add("id", s);
-		});
-		return Response.ok(response.build().toString()).build();
+		final JsonObjectBuilder[] response = {Json.createObjectBuilder()};
+		final List<String> games = Game.getSavedGames();
+		IntStream.rangeClosed(0, games.size()-1).forEach( id -> {
+			response[0] = response[0].add("id"+id, games.get(id));
+				});
+		/*Game.getSavedGames().forEach(s -> {
+			int i = 0;
+			response.add(""+ i++, s);
+			System.out.println(s);
+			System.out.println(i);
+		});*/
+		//System.out.println(response.build().toString());
+		return Response.ok(response[0].build().toString()).build();
 	}
 
 	//Requêtes pour sauvegarder et quitter une partie

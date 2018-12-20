@@ -1,6 +1,7 @@
 package diaballik.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -8,6 +9,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MovePiece implements Action {
 
 	private int dx;
