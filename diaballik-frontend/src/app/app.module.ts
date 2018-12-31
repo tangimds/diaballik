@@ -11,6 +11,8 @@ import {MyData} from './mydata';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { MatInputModule, MatPaginatorModule, MatProgressSpinnerModule,
   MatSortModule, MatTableModule } from '@angular/material';
+import { NewGameMenuComponent } from './new-game-menu/new-game-menu.component';
+import { LoadGameMenuComponent } from './load-game-menu/load-game-menu.component';
 
 
 const appRoutes: Routes = [
@@ -25,6 +27,14 @@ const appRoutes: Routes = [
   {
     path: 'board',
     component: BoardComponent
+  },
+  {
+    path: 'newGameMenu',
+    component: NewGameMenuComponent
+  },
+  {
+    path: 'loadGameMenu',
+    component: LoadGameMenuComponent
   }
 ];
 
@@ -32,7 +42,9 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     BoardComponent,
-    MenuComponent
+    MenuComponent,
+    NewGameMenuComponent,
+    LoadGameMenuComponent
   ],
   imports: [
     RouterModule.forRoot(
