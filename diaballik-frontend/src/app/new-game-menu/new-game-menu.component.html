@@ -1,36 +1,47 @@
 <!-- FORMULAIRE NEW GAME -->
 <form (ngSubmit)="onSubmit()">
-  <div class="left">
-    <h3>Player 1 (WHITE) </h3> <br> Name : <input type="text" [value]="name1" class="form-control"  (input)="name1=$event.target.value" required><br>
-  </div>
-  <div class="right">
-    <h3>Player 2 (BLACK)</h3> <br>
-    <input type="radio" name="type" class="form-control" (change)="human = true" checked required>Human
-    <input type="radio" name="type" class="form-control" (change)="human = false" required>AI<br>
-
-    <div *ngIf="this.human">
-      Name : <input type="text" [value]="name2" class="form-control" (input)="name2=$event.target.value"  required>
+  <div id="left">
+    <h3>Player 1 (WHITE) </h3>
+    <div class="inputDiv">
+      <p>Name :</p>
+      <input type="text" class="form-control input"  (input)="name1=$event.target.value" required>
+      <!-- <label>Name</label> -->
     </div>
+  </div>
+  <div id="right">
+    <h3>Player 2 (BLACK)</h3> <br>
+    <div> 
+      <input type="radio" name="type" class="form-control" (change)="human = true" required>Human
+      <input type="radio" name="type" class="form-control" (change)="human = false" checked required>AI<br>
+
+      <div *ngIf="this.human">
+        Name : <input type="text" class="form-control" (input)="name2=$event.target.value"  required>
+      </div>
 
 
-    <div *ngIf="!this.human">
-      Difficulty :
-      <select  [value]="difficulty" size="1" (input)="difficulty=$event.target.value" required>
-        <option>NOOB</option>
-        <option>STARTING</option>
-        <option>PROGRESSIVE</option>
-      </select>
+      <div *ngIf="!this.human">
+        Difficulty :
+        <select  [value]="difficulty" size="1" (input)="difficulty=$event.target.value" required>
+          <option>NOOB</option>
+          <option>STARTING</option>
+          <option>PROGRESSIVE</option>
+        </select>
+      </div>
     </div>
   </div>
   <div class="bottom">
-    Scenario :
-    <select  [value]="scenario" size="1" (input)="scenario=$event.target.value" required>
-      <option value="STANDARD">STANDARD</option>
-      <option value="RANDOM">RANDOM</option>
-      <option value="EAU">EAU</option>
-    </select>
+    <div>
+      Scenario :
+      <select  [(ngModel)]="scenario" size="1" (input)="scenario=$event.target.value" name="test" required>
+        <!-- <option [value]="Standard">STANDARD</option>
+        <option [value]="Random">RANDOM</option>
+        <option [value]="EAU">EAU</option></select> -->
+        <option *ngFor="let scen of scenarios" [value]="scen">{{scen}}</select>
+          
+      <img [src]="scenarioImages[scenario]" alt="standard">
+    </div>
     <br>
-    <button style="margin: 10px 0" type="submit">Launch</button>
-    <a routerLink="/menu"><button style="margin: 10px 0" type="submit">Go Back</button></a>
+    <button class="button">Launch</button>
+    <a routerLink="/menu" style="text-decoration:none;"><button class="button" type="submit">Go Back</button></a>
   </div>
 </form>

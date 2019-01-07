@@ -15,8 +15,14 @@ export class NewGameMenuComponent implements OnInit {
   difficulty: string;
   human: boolean;
   modeMenu: any;
+  imageUrl: string;
 
   displayedColumns = ['id', 'p1', 'p2', 'nbTurn', 'nbMoves', 'winner'];
+
+  // scenarios = [{name:'Standard', path:'../assets/standard.png'},{name:'EAU', path:'../assets/eau.png'},{name:'Random', path:'../assets/random.png'}]
+  scenarios = ['Standard', 'EAU', 'Random'];
+  scenarioImages = {Standard:'../assets/standard.png', EAU:'../assets/eau.png', Random:'../assets/random.png'};
+
 
   constructor(private router: Router, private data: MyData) {
   }
@@ -24,8 +30,11 @@ export class NewGameMenuComponent implements OnInit {
   ngOnInit() {
     this.name1 = 'Tangi';
     this.name2 = 'Taha';
-    this.scenario = 'STANDARD';
-    this.human = true;
+    this.scenario = 'Standard';
+    this.human = false;
+    this.difficulty = 'NOOB';
+
+    console.log(this.scenario);
   }
 
   onSubmit() {
@@ -43,6 +52,10 @@ export class NewGameMenuComponent implements OnInit {
       '  scenario: ' + this.scenario + '\n' +
       '  difficulty: ' + this.difficulty + '\n' +
       '  human: ' + this.human + '');
+  }
+
+  changeImage(changes:any){
+    console.log(changes);
   }
 
 
