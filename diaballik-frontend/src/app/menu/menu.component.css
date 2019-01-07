@@ -17,3 +17,32 @@
 .bottom {
   text-align: center;
 }
+
+.button {
+	background-color:#ff8f00;
+	-moz-border-radius:15px;
+	-webkit-border-radius:15px;
+	border-radius:10px;
+	border:2px solid #000000;
+	display:block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Arial;
+	font-size:17px;
+	padding:16px 31px;
+	text-decoration:none;
+  width: 100px;
+  margin: 5px auto;
+  text-align: center;
+}
+.button:hover {
+	background-color:#ffab44;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+#container {
+  padding-top: 50px;
+}
