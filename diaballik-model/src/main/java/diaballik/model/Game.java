@@ -122,10 +122,6 @@ public class Game {
 		return res[0];
 	}
 
-	public static void main(final String[] args) throws IOException {
-		verify(true, false, false, false, false);
-	}
-
 	// TODO : empecher de jouer si la partie est finie
 	public boolean play(final Action a) {
 		final boolean aa = !a.verifyAction(board),
