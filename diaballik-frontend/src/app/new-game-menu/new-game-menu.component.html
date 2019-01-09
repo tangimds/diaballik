@@ -1,5 +1,5 @@
 <!-- FORMULAIRE NEW GAME -->
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" ngNativeValidate>
   <div id="left">
     <h3>Player 1 (WHITE) </h3>
     <div class="inputDiv">
@@ -41,7 +41,7 @@
       <img [src]="scenarioImages[scenario]" alt="standard">
     </div>
     <br>
-    <button class="button">Launch</button>
+    <button class="button" type="submit">Launch</button>
     <a routerLink="/menu" style="text-decoration:none;"><button class="button" type="submit">Go Back</button></a>
   </div>
 </form>
