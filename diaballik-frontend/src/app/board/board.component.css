@@ -1,9 +1,10 @@
 div {
-  --size-cell: 80px;
-  --border-cell: 5px;
+  --size-cell: 62px;
+  --border-cell: calc(var(--size-cell)/16);
   --nb-cell: 7;
-  --size-ball: 24px;
-  --size-piece: 60px;
+  --size-piece: calc(var(--size-cell)*(3/4));
+  --size-ball: calc(var(--size-piece)*(2/5));
+
 }
 
 .board{
