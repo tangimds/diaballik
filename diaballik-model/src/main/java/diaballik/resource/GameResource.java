@@ -13,10 +13,9 @@ import diaballik.model.Scenario;
 import diaballik.model.MovePiece;
 import diaballik.model.MoveBall;
 import io.swagger.annotations.Api;
+
 import javax.inject.Singleton;
 import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonBuilderFactory;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -26,9 +25,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -76,7 +73,7 @@ public class GameResource {
 		final GameBuilder builder = new SavedGameBuilder();
 		final Game game = builder.buildGame(idGame);
 		this.game = Optional.ofNullable(game);
-		if(this.game.isPresent()) {
+		if (this.game.isPresent()) {
 			return Response.ok(this.game.get()).build();
 		} else {
 			return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"La partie n'existe pas !\"}").build();
@@ -89,9 +86,9 @@ public class GameResource {
 	public Response savedGames() {
 		final JsonObjectBuilder[] response = {Json.createObjectBuilder()};
 		final List<String> games = Game.getSavedGames();
-		IntStream.rangeClosed(0, games.size()-1).forEach( id -> {
-			response[0] = response[0].add("id"+id, games.get(id));
-				});
+		IntStream.rangeClosed(0, games.size() - 1).forEach(id -> {
+			response[0] = response[0].add("id" + id, games.get(id));
+		});
 		/*Game.getSavedGames().forEach(s -> {
 			int i = 0;
 			response.add(""+ i++, s);
@@ -108,7 +105,7 @@ public class GameResource {
 	@Path("/save/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save() {
-		if(this.game.isPresent()) {
+		if (this.game.isPresent()) {
 			try {
 				this.game.get().save();
 				return Response.ok().build();
@@ -134,8 +131,8 @@ public class GameResource {
 	@Path("/replay/redo")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response redo() {
-		if(this.game.isPresent()) {
-			if(this.game.get().nextAction()) {
+		if (this.game.isPresent()) {
+			if (this.game.get().nextAction()) {
 				return Response.ok(this.game.get()).build();
 			}
 		}
@@ -146,8 +143,8 @@ public class GameResource {
 	@Path("/replay/undo")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response undo() {
-		if(this.game.isPresent()) {
-			if(this.game.get().previousAction()) {
+		if (this.game.isPresent()) {
+			if (this.game.get().previousAction()) {
 				return Response.ok(this.game.get()).build();
 			}
 		}
@@ -159,14 +156,14 @@ public class GameResource {
 	@Path("movePiece/{x1}/{y1}/{x2}/{y2}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response movePiece(@PathParam("x1") final String x1,
-						  @PathParam("y1") final String y1,
-						  @PathParam("x2") final String x2,
-						  @PathParam("y2") final String y2) {
-		if(game.isPresent()) {
+							  @PathParam("y1") final String y1,
+							  @PathParam("x2") final String x2,
+							  @PathParam("y2") final String y2) {
+		if (game.isPresent()) {
 			final Board board = game.get().getBoard();
 			final Piece p = board.getPiece(Integer.parseInt(x1), Integer.parseInt(y1));
 			final Action movePiece = new MovePiece(p, Integer.parseInt(x2), Integer.parseInt(y2));
-			if(this.game.get().play(movePiece)) {
+			if (this.game.get().play(movePiece)) {
 				return Response.ok(this.game.get()).build();
 			}
 			return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Coup non autorisé\"}").build();
@@ -178,15 +175,15 @@ public class GameResource {
 	@Path("moveBall/{x1}/{y1}/{x2}/{y2}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response moveBall(@PathParam("x1") final String x1,
-						 @PathParam("y1") final String y1,
-						 @PathParam("x2") final String x2,
-						 @PathParam("y2") final String y2) {
-		if(game.isPresent()) {
+							 @PathParam("y1") final String y1,
+							 @PathParam("x2") final String x2,
+							 @PathParam("y2") final String y2) {
+		if (game.isPresent()) {
 			final Board board = game.get().getBoard();
 			final Piece startingP = board.getPiece(Integer.parseInt(x1), Integer.parseInt(y1));
 			final Piece endingP = board.getPiece(Integer.parseInt(x2), Integer.parseInt(y2));
 			final Action moveBall = new MoveBall(startingP, endingP);
-			if(this.game.get().play(moveBall)) {
+			if (this.game.get().play(moveBall)) {
 				return Response.ok(this.game.get()).build();
 			}
 			return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Coup non autorisé\"}").build();
@@ -198,8 +195,8 @@ public class GameResource {
 	@Path("IAPlay")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response iaPlay() {
-		if(game.isPresent()) {
-			if(game.get().play()) {
+		if (game.isPresent()) {
+			if (game.get().play()) {
 				return Response.ok(this.game.get()).build();
 			}
 			return Response.status(Response.Status.BAD_REQUEST).entity("{\"error\":\"Coup non autorisé\"}").build();

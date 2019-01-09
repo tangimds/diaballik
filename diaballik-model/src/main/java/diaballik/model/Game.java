@@ -15,6 +15,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.IntStream;
 
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -104,12 +105,38 @@ public class Game {
 		nbTurn = t;
 	}
 
+	/*private boolean verify(final boolean a, final boolean b, final boolean c) {
+		return a || b || c;
+	}
+
+	private boolean verify(final boolean a, final boolean b) {
+		return a || b;
+	}*/
+
+	private static boolean verify(final boolean... args) {
+		final boolean[] res = new boolean[1];
+		res[0] = false;
+		IntStream.range(0, args.length).forEach(i -> {
+			res[0] = res[0] || args[i];
+		});
+		return res[0];
+	}
+
+	public static void main(final String[] args) throws IOException {
+		verify(true, false, false, false, false);
+	}
+
 	// TODO : empecher de jouer si la partie est finie
 	public boolean play(final Action a) {
-		if (!a.verifyAction(board) || (nbTurn & 1) == 0 && a.getColor()==Color.BLACK || (nbTurn & 1) != 0 && a.getColor()==Color.WHITE) {
+		final boolean aa = !a.verifyAction(board),
+				bb = ((nbTurn & 1) == 0 && a.getColor() == Color.BLACK),
+				cc = ((nbTurn & 1) != 0 && a.getColor() == Color.WHITE);
+		if (verify(aa, bb, cc)) {
 			return false;
 		}
-		if ((nbTurn & 1) == 0 && a.getColor()==Color.WHITE || (p2 instanceof HumanPlayer) && a.getColor()==Color.BLACK) {
+		final boolean dd = ((nbTurn & 1) == 0 && a.getColor() == Color.WHITE),
+				ee = ((p2 instanceof HumanPlayer) && a.getColor() == Color.BLACK);
+		if (verify(dd, ee)) {
 			actions.add(a);
 			a.execute(board);
 			nbActions++;
@@ -173,7 +200,7 @@ public class Game {
 		a.undo(board);
 		this.winner = "NONE";
 		nbActions--;
-		if ((nbActions+1) % 3 == 0) {
+		if ((nbActions + 1) % 3 == 0) {
 			nbTurn--;
 		}
 		return true;

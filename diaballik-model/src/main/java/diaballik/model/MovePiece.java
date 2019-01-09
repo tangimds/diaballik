@@ -35,6 +35,7 @@ public class MovePiece implements Action {
 		return piece;
 	}
 
+	@Override
 	public Color getColor() {
 		return piece.getColor();
 	}
