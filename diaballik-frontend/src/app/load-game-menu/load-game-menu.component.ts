@@ -18,6 +18,7 @@ export class LoadGameMenuComponent implements OnInit {
   human: boolean;
   modeMenu: any;
   loaded: boolean = false;
+  selectedRow:any;
 
   //  dataSource: DataTableDataSource;
   dataSource: any;
@@ -72,6 +73,14 @@ export class LoadGameMenuComponent implements OnInit {
       this.data.loaded = true;
       this.router.navigate(['board'], { queryParams: { m: 'PVP', n1: g.p1.name, n2: g.p2.name, sce: g.scenario } });
     }
+  }
+
+  rowHighlight(g){
+    this.selectedRow = g.id;
+  }
+
+  rowUnhighlight(){
+    this.selectedRow = null;
   }
 
 
