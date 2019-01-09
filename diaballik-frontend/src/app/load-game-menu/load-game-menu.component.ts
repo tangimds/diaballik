@@ -48,7 +48,7 @@ export class LoadGameMenuComponent implements OnInit {
       );
   }
 
-  cellClick(g) {
+  rowClick(g) {
     console.log('CLICKED');
     console.log(g);
     this.human = (g.p2.type !== 'AIPlayer');

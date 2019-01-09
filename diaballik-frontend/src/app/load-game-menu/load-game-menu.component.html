@@ -5,7 +5,7 @@
 
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
-      <mat-cell *matCellDef="let g" (click) = "cellClick(g)">{{g.id}}</mat-cell>
+      <mat-cell *matCellDef="let g">{{g.id}}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="p1">
@@ -41,9 +41,9 @@
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="rowClick(row)"></mat-row>
 
   </mat-table>
   
-  <a routerLink="/menu"><button style="margin: 10px 0" type="submit">Go Back</button></a>
+  <a routerLink="/menu" style="text-decoration:none;"><button class="button" type="submit">Go Back</button></a>
 </div>
